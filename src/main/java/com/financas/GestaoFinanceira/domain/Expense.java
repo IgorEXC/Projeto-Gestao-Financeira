@@ -1,36 +1,42 @@
 package com.financas.GestaoFinanceira.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tb_expense") // Despesa
 public class Expense implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
+	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(name = "value", length = 100)
 	private String description;
+
+	@Column(name = "price", nullable = false)
 	private Double price;
+
+	@Column(name = "date")
 	private LocalDate date;
+
+	@Column(name = "necessary_expense")
 	private Boolean necessaryExpense; // despesa necessária
 	
 	@JsonIgnoreProperties("expenses")
@@ -49,9 +55,6 @@ public class Expense implements Serializable {
 	@JoinColumn(name = "financial_planning_id")
 	private FinancialPlanning financialPlanning;
 
-	public Expense() {
-	}
-
 	public Expense(Long id, String description, Double value, LocalDate date, Boolean necessaryExpense,
 			FinancialPlanning financialPlanning) {
 		this.id = id;
@@ -60,77 +63,5 @@ public class Expense implements Serializable {
 		this.date = date;
 		this.necessaryExpense = necessaryExpense;
 		this.financialPlanning = financialPlanning;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double value) {
-		this.price = value;
-	}
-
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public Boolean getNecessaryExpense() {
-		return necessaryExpense;
-	}
-
-	public void setNecessaryExpense(Boolean necessaryExpense) {
-		this.necessaryExpense = necessaryExpense;
-	}
-
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public List<UserExpense> getUsers() {
-		return users;
-	}
-	
-	public FinancialPlanning getFinancialPlanning() {
-		return financialPlanning;
-	}
-
-	public void setFinancialPlanning(FinancialPlanning financialPlanning) {
-		this.financialPlanning = financialPlanning;
-	}
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Expense other = (Expense) obj;
-		return Objects.equals(id, other.id);
 	}
 }

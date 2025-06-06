@@ -2,7 +2,8 @@ package com.financas.GestaoFinanceira.Services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.financas.GestaoFinanceira.repositories.ReportRepositoryImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,22 +12,25 @@ import com.financas.GestaoFinanceira.domain.Report;
 import com.financas.GestaoFinanceira.domain.dto.ReportDTO;
 import com.financas.GestaoFinanceira.repositories.ReportRepository;
 
+@RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class ReportService {
 
-	@Autowired
-	ReportRepository repository;
+	private final ReportRepository repository;
+	private final ReportRepositoryImpl repositoryImpl;
 
-	@Transactional(readOnly = true)
 	public List<ReportDTO> findAll() {
 		List<Report> list = repository.findAll();
-		List<ReportDTO> dto = list.stream().map(x -> new ReportDTO(x)).toList();
-		return dto;
+        return list.stream().map(ReportDTO::new).toList();
 	}
 
-	@Transactional(readOnly = true)
 	public ReportDTO fingById(Long id) {
-		Report obj = repository.findById(id).get();
+		Report obj = repository.findById(id).orElseThrow();
 		return new ReportDTO(obj);
+	}
+
+	public Report findByUserCpf(String cpf) {
+		return repositoryImpl.findUserCpf(cpf);
 	}
 }
