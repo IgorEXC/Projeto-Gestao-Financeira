@@ -2,7 +2,7 @@ package com.financas.GestaoFinanceira.resources;
 
 import com.financas.GestaoFinanceira.Services.ReportService;
 import com.financas.GestaoFinanceira.domain.Report;
-import com.financas.GestaoFinanceira.domain.dto.ReportDTO;
+import com.financas.GestaoFinanceira.domain.dto.ReportResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +16,12 @@ public class ReportResource {
 	private final ReportService service;
 
 	@GetMapping
-	public List<ReportDTO> findAll() {
+	public List<ReportResponseDTO> findAll() {
         return service.findAll();
 	}
 
 	@GetMapping(value = "/{id}")
-	public ReportDTO findById(@PathVariable Long id) {
+	public ReportResponseDTO findById(@PathVariable Long id) {
         return service.fingById(id);
 	}
 

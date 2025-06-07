@@ -16,7 +16,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -35,8 +35,4 @@ public class Report implements Serializable {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	public Report(Long id, User user) {
-		this.id = id;
-		this.user = user;
-	}
 }

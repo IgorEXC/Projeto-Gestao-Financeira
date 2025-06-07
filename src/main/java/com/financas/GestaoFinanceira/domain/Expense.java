@@ -27,7 +27,7 @@ public class Expense implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "value", length = 100)
+	@Column(name = "description", length = 100)
 	private String description;
 
 	@Column(name = "price", nullable = false)
@@ -54,14 +54,4 @@ public class Expense implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "financial_planning_id")
 	private FinancialPlanning financialPlanning;
-
-	public Expense(Long id, String description, Double value, LocalDate date, Boolean necessaryExpense,
-			FinancialPlanning financialPlanning) {
-		this.id = id;
-		this.description = description;
-		this.price = value;
-		this.date = date;
-		this.necessaryExpense = necessaryExpense;
-		this.financialPlanning = financialPlanning;
-	}
 }
