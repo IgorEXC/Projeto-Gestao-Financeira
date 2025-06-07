@@ -1,35 +1,46 @@
 package com.financas.GestaoFinanceira.resources;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.financas.GestaoFinanceira.Services.UserService;
+import com.financas.GestaoFinanceira.domain.User;
+import com.financas.GestaoFinanceira.domain.dto.UserRequestDTO;
+import com.financas.GestaoFinanceira.domain.dto.UserResponseDTO;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.financas.GestaoFinanceira.Services.UserService;
-import com.financas.GestaoFinanceira.domain.dto.UserNoListDTO;
-import com.financas.GestaoFinanceira.domain.dto.min.UserMinWithListDTO;
+import java.net.URI;
+import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
 
-	@Autowired
-	UserService service;
+	private final UserService service;
 	
-	@GetMapping
-	public List<UserNoListDTO> findAll(){
-		List<UserNoListDTO> list = service.findAll();
-		return list;
+	@GetMapping(value = "/all")
+	public ResponseEntity<List<UserResponseDTO>> findAllPerPage(@RequestParam int page, @RequestParam int itensPerPage){
+        return ResponseEntity.ok().body(service.findAllPerPage(page, itensPerPage));
 	}
 	
 	@GetMapping(value = "/{id}")
-	public UserMinWithListDTO findById(@PathVariable Long id){
-		UserMinWithListDTO obj = service.findById(id);
-		return obj;
+	public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id){
+        return ResponseEntity.ok().body(service.findById(id));
 	}
-	
-	
+
+	@PostMapping(value = "/create")
+	public ResponseEntity<UserRequestDTO> createUser(@Valid @RequestBody UserRequestDTO dto) {
+		User user = service.insert(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(user.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
 }

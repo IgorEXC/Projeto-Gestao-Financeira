@@ -1,0 +1,11 @@
+spring:
+  security:
+    user:
+      name: postgres
+      password: 1234
+  jpa:
+    open-in-view: 'false'
+  application:
+    name: gestao
+  profiles:
+    active: ${APP_PROFILE:dev}

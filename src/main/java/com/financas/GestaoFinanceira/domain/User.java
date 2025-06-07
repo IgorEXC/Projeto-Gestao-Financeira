@@ -1,118 +1,61 @@
 package com.financas.GestaoFinanceira.domain;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import lombok.*;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tb_user")
 public class User implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
+	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private Long id;
+
+	@Column(name = "cpf", length = 11, unique = true)
+	private String cpf;
+
+	@Column(name = "name", length = 40)
 	private String name;
+
+	@Column(name = "username", length = 40)
+	private String username;
+
+	@Column(name = "email", length = 50, unique = true, nullable = false)
 	private String email;
+
+	@Column(name = "monthly_income")
 	private Double monthlyIncome; //renda mensal
-	
-	@JsonIgnoreProperties("user")
-	@OneToMany(mappedBy = "user")
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<FinancialPlanning> financialPlanning = new ArrayList<>();
-	
-	@JsonIgnoreProperties("users")
-	@OneToMany(mappedBy = "id.user")
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@OneToMany(mappedBy = "id.user", fetch = FetchType.LAZY)
 	private List<UserExpense> userExpenses = new ArrayList<>();
 	
-	@ElementCollection
-	@CollectionTable(name = "tb_contato")
-	private Set<String> telephoneContacts = new HashSet<>();
-	
-	public User() {
-	}
-
-	public User(Long id, String name, String email, Double monthlyIncome) {
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.monthlyIncome = monthlyIncome;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Double getMonthlyIncome() {
-		return monthlyIncome;
-	}
-
-	public void setMonthlyIncome(Double monthlyIncome) {
-		this.monthlyIncome = monthlyIncome;
-	}
-
-	public List<FinancialPlanning> getFinancialPlanning() {
-		System.out.println("Lista de planejamentos financeiros na classe User serializada!");
-		return financialPlanning;
-	}
-
-	public List<UserExpense> getUserExpenses() {
-		return userExpenses;
-	}
-
-	public Set<String> getTelephoneContacts() {
-		return telephoneContacts;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		return Objects.equals(id, other.id);
-	}
-
+//	@ElementCollection
+//	@CollectionTable(name = "tb_contato")
+//	private Set<String> telephoneContacts = new HashSet<>();
 }

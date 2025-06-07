@@ -1,7 +1,7 @@
 package com.financas.GestaoFinanceira.domain;
 
+import java.io.Serial;
 import java.io.Serializable;
-import java.util.Objects;
 
 
 import jakarta.persistence.Entity;
@@ -11,13 +11,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.*;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tb_report")
 public class Report implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
+	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -26,44 +35,4 @@ public class Report implements Serializable {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	public Report() {
-	}
-
-	public Report(Long id, User user) {
-		this.id = id;
-		this.user = user;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Report other = (Report) obj;
-		return Objects.equals(id, other.id);
-	}
 }

@@ -1,32 +1,31 @@
 package com.financas.GestaoFinanceira.Services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.financas.GestaoFinanceira.domain.Expense;
+import com.financas.GestaoFinanceira.domain.dto.ExpenseResponseDTO;
+import com.financas.GestaoFinanceira.domain.mapper.ExpenseMapper;
+import com.financas.GestaoFinanceira.repositories.ExpenseRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.financas.GestaoFinanceira.domain.Expense;
-import com.financas.GestaoFinanceira.domain.dto.ExpenseDTO;
-import com.financas.GestaoFinanceira.repositories.ExpenseRepository;
+import java.util.List;
 
+@RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class ExpenseService {
-	
-	@Autowired
-	ExpenseRepository repository;
-	
-	@Transactional(readOnly = true)
-	public List<ExpenseDTO> findAll(){
+
+	private final ExpenseRepository repository;
+	private final ExpenseMapper mapper;
+
+	public List<ExpenseResponseDTO> findAll(){
 		List<Expense> result = repository.findAll();
-		List<ExpenseDTO> dto = result.stream().map(x -> new ExpenseDTO(x)).toList();
-		return dto;
+		return result.stream().map(mapper::entityToResponse).toList();
 	}
-	
-	@Transactional(readOnly = true)
-	public ExpenseDTO findById(Long id) {
-		Expense result = repository.findById(id).get();
-		return new ExpenseDTO(result);
+
+	public ExpenseResponseDTO findById(Long id) {
+		Expense result = repository.findById(id).orElseThrow();
+		return mapper.entityToResponse(result);
 	}
 
 }

@@ -1,32 +1,30 @@
 package com.financas.GestaoFinanceira.Services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.financas.GestaoFinanceira.domain.FinancialPlanning;
+import com.financas.GestaoFinanceira.domain.dto.FinancialPlanningResponseDTO;
+import com.financas.GestaoFinanceira.domain.mapper.FinancialPlanningMapper;
+import com.financas.GestaoFinanceira.repositories.FinancialPlanningRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.financas.GestaoFinanceira.domain.FinancialPlanning;
-import com.financas.GestaoFinanceira.domain.dto.FinancialPlanningDTO;
-import com.financas.GestaoFinanceira.domain.dto.min.FinancialPlanningMinDTO;
-import com.financas.GestaoFinanceira.repositories.FinancialPlanningRepository;
+import java.util.List;
 
+@RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class FinancialPlanningService {
 
-	@Autowired
-	private FinancialPlanningRepository repository;
-	
-	@Transactional(readOnly = true)
-	public List<FinancialPlanningMinDTO> findAll(){
+	private final FinancialPlanningRepository repository;
+	private final FinancialPlanningMapper mapper;
+
+	public List<FinancialPlanningResponseDTO> findAll(){
 		List<FinancialPlanning> list = repository.findAll();
-		List<FinancialPlanningMinDTO> dto = list.stream().map(x -> new FinancialPlanningMinDTO(x)).toList();
-		return dto;
+		return list.stream().map(mapper::entityToResponse).toList();
 	}
-	
-	@Transactional(readOnly = true)
-	public FinancialPlanningDTO fingById(Long id) {
-		FinancialPlanning obj = repository.findById(id).get();
-		return new FinancialPlanningDTO(obj);
+
+	public FinancialPlanningResponseDTO fingById(Long id) {
+		FinancialPlanning obj = repository.findById(id).orElseThrow();
+		return mapper.entityToResponse(obj);
 	}
 }
