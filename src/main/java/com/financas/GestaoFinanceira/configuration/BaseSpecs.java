@@ -1,4 +1,4 @@
-package com.financas.GestaoFinanceira.Configuration;
+package com.financas.GestaoFinanceira.configuration;
 
 import jakarta.persistence.metamodel.SingularAttribute;
 import org.springframework.data.jpa.domain.Specification;
