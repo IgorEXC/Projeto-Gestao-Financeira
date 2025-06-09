@@ -1,6 +1,7 @@
 package com.financas.GestaoFinanceira.Services;
 
 import com.financas.GestaoFinanceira.domain.Report;
+import com.financas.GestaoFinanceira.domain.dto.ReportRequestDTO;
 import com.financas.GestaoFinanceira.domain.dto.ReportResponseDTO;
 import com.financas.GestaoFinanceira.domain.mapper.ReportMapper;
 import com.financas.GestaoFinanceira.repositories.ReportRepository;
@@ -32,5 +33,12 @@ public class ReportService {
 
 	public Report findByUserCpf(String cpf) {
 		return repositoryImpl.findUserCpf(cpf);
+	}
+
+	@Transactional
+	public void insert(ReportRequestDTO dto){
+		Report obj = mapper.requestToEntity(dto);
+		obj.getUser().setId(dto.getId());
+		repository.save(obj);
 	}
 }
