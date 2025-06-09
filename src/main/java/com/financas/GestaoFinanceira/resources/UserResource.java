@@ -4,6 +4,7 @@ import com.financas.GestaoFinanceira.Services.UserService;
 import com.financas.GestaoFinanceira.domain.User;
 import com.financas.GestaoFinanceira.domain.dto.UserRequestDTO;
 import com.financas.GestaoFinanceira.domain.dto.UserResponseDTO;
+import com.financas.GestaoFinanceira.domain.mapper.UserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.List;
 public class UserResource {
 
 	private final UserService service;
+	private final UserMapper mapper;
 	
 	@GetMapping(value = "/all")
 	public ResponseEntity<List<UserResponseDTO>> findAllPerPage(@RequestParam int page, @RequestParam int itensPerPage){
@@ -33,6 +35,7 @@ public class UserResource {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id){
+//		UserResponseDTO dto =
         return ResponseEntity.ok().body(service.findById(id));
 	}
 

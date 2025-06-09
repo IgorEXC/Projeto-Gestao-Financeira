@@ -30,9 +30,8 @@ public class UserService implements BaseSpecs<User> {
 		return list.stream().map(mapper::entityToResponse).toList();
 	}
 
-	public UserResponseDTO findById(Long id) {
-		User obj = repository.findById(id).orElseThrow();
-		return mapper.entityToResponse(obj);
+	public User findById(Long id) {
+		return repository.findById(id).orElseThrow();
 	}
 
 	@Transactional

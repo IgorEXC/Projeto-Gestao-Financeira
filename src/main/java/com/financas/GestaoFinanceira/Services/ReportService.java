@@ -1,6 +1,7 @@
 package com.financas.GestaoFinanceira.Services;
 
 import com.financas.GestaoFinanceira.domain.Report;
+import com.financas.GestaoFinanceira.domain.User;
 import com.financas.GestaoFinanceira.domain.dto.ReportRequestDTO;
 import com.financas.GestaoFinanceira.domain.dto.ReportResponseDTO;
 import com.financas.GestaoFinanceira.domain.mapper.ReportMapper;
@@ -20,6 +21,7 @@ public class ReportService {
 	private final ReportRepository repository;
 	private final ReportRepositoryImpl repositoryImpl;
 	private final ReportMapper mapper;
+	private final UserService userService;
 
 	public List<ReportResponseDTO> findAll() {
 		List<Report> list = repository.findAll();
@@ -38,7 +40,7 @@ public class ReportService {
 	@Transactional
 	public void insert(ReportRequestDTO dto){
 		Report obj = mapper.requestToEntity(dto);
-		obj.getUser().setId(dto.getId());
+		User user = userService.findById(dto.getId());
 		repository.save(obj);
 	}
 }
