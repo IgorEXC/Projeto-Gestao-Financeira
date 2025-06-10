@@ -30,24 +30,39 @@ public class UserService implements BaseSpecs<User> {
 		return list.stream().map(mapper::entityToResponse).toList();
 	}
 
-	public UserResponseDTO findById(Long id) {
-		User obj = repository.findById(id).orElseThrow();
-		return mapper.entityToResponse(obj);
+	public User findById(Long id) {
+		return repository.findById(id).orElseThrow();
 	}
 
 	@Transactional
 	public User insert(UserRequestDTO dto) {
-		existsUserInDataBase(dto.getName(), dto.getCpf(), dto.getEmail());
+		if(repository.exists(existsUserInDataBase(dto.getName(), dto.getCpf(), dto.getEmail()))){
+				throw new BusinessException("User exists!");
+		}
 		User obj = mapper.requestToEntity(dto);
 		return repository.save(obj);
 	}
 
-	private void existsUserInDataBase(String name, String cpf, String email){
-		Specification<User> spec = Specification.where(byEquals(User_.name, name))
+	private Specification<User> existsUserInDataBase(String name, String cpf, String email){
+		return Specification.where(byEquals(User_.name, name))
 				.or(byEquals(User_.cpf, cpf))
 				.or(byEquals(User_.email, email));
-		if (repository.exists(spec)){
+	}
+
+	@Transactional
+	public void update(Long id, UserRequestDTO dto) {
+		User obj = findById(id);
+		if(repository.exists(existsUserInDataBase(dto.getName(), dto.getCpf(), dto.getEmail())
+				.and(byNotEquals(User_.id, id)))){
 			throw new BusinessException("User exists!");
 		}
+		obj = updateData(obj.getId(), dto);
+		repository.save(obj);
+	}
+
+	private User updateData(Long id, UserRequestDTO dto) {
+		User obj = mapper.requestToEntity(dto);
+		obj.setId(id);
+		return obj;
 	}
 }
