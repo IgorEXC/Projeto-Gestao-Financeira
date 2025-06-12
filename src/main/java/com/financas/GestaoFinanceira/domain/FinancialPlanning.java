@@ -27,10 +27,10 @@ public class FinancialPlanning implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "financial_planning_id")
 	private Long id;
-
+	//meta anual nao pode ser maior que 30% do salario anual
 	@Column(name = "annual_goal")
 	private Double annualGoal; //meta anual de economia
-
+	//meta mensal nao pode ser maior que 30% do salario
 	@Column(name = "monthly_goal")
 	private Double monthlyGoal; //meta mensal de economia
 	

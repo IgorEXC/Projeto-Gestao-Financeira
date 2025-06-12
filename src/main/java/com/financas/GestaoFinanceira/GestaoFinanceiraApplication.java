@@ -11,3 +11,7 @@ public class GestaoFinanceiraApplication {
 	}
 
 }
+
+/*Implementar despesas atrasadas, despesas pagas, despesas futuras. Planos e projetos
+* ordem de compras pagas ou pendentes, investimentos, gastos essencias, gastos futeis
+* fazer excel e relatorio jasper*/
