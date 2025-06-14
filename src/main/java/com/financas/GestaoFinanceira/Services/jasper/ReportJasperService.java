@@ -41,8 +41,8 @@ public class ReportJasperService {
     //nome do arquivo, ou seja, o relatorio jasper
     private static final String REPORT_NAME = "relatorio_report.jrxml";
 
-private static final String DESTINATION_PATH = "/home/igor/Relatorios Jasper/jasper-report/";
-
+    private static final String DESTINATION_PATH = "/home/igor/Relatorios Jasper/jasper-report/";
+//os dados ja deve vim preenchido
     public void generateReportPdf(ReportJasperDTO dto) throws IOException {
 
         byte[] imagebg = this.loadImage(IMAGEBG_PATH);
