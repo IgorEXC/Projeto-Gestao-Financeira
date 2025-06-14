@@ -40,7 +40,7 @@ public class ReportJasperService {
     //nome do arquivo, ou seja, o relatorio jasper
     private static final String REPORT_NAME = "relatorio_report.jrxml";
 
-private static final String DESTINATION_PATH = "//home//igor//Área de trabalho//jasper-report//";
+private static final String DESTINATION_PATH = "/home/igor/Relatorios Jasper/jasper-report/";
 
     public void generateReportPdf(ReportJasperDTO dto) throws IOException {
 
@@ -54,12 +54,14 @@ private static final String DESTINATION_PATH = "//home//igor//Área de trabalho/
         params.put("categoryName", dto.getName());
         params.put("expenseValue", dto.getExpenseValue());
         params.put("totalValue", dto.getTotalValue());
+        params.put("sumTotal", dto.getSumTotal());
+        params.put("sumValue,", dto.getSumValue());
         params.put("background", imagebg);
         params.put("logo", imagelogo);
 
         String absolutePath = getAbsolutePath();
         try{
-            String folderDiretory = getDirectorySave("reports-saved/");
+            String folderDirectory = getDirectorySave("reports-saved/");
             JasperReport jasperReport = JasperCompileManager.compileReport(absolutePath);
             LOGGER.info("Report compiled successfully! {} " + absolutePath);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
@@ -67,7 +69,7 @@ private static final String DESTINATION_PATH = "//home//igor//Área de trabalho/
             JasperExportManager.exportReportToPdfFile(jasperPrint, absolutePath.replace(".jrxml", ".pdf"));
             LOGGER.info("Report exported successfully! {} " + absolutePath);
             LOGGER.info("Report generated successfully! {} " + absolutePath);
-            JasperExportManager.exportReportToPdfFile(jasperPrint, folderDiretory);
+            JasperExportManager.exportReportToPdfFile(jasperPrint, folderDirectory);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

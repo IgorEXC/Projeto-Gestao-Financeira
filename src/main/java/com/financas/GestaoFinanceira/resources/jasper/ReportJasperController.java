@@ -2,8 +2,10 @@ package com.financas.GestaoFinanceira.resources.jasper;
 
 import com.financas.GestaoFinanceira.Services.jasper.ReportJasperService;
 import com.financas.GestaoFinanceira.domain.dto.jasper.ReportJasperDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +19,7 @@ public class ReportJasperController {
     private final ReportJasperService service;
 
     @PostMapping("/generate-report")
-    public void generateReportPdf(ReportJasperDTO dto) throws IOException {
+    public void generateReportPdf(@Valid @RequestBody ReportJasperDTO dto) throws IOException {
         service.generateReportPdf(dto);
     }
 }

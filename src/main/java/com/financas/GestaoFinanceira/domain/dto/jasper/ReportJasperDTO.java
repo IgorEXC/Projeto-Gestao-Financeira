@@ -19,4 +19,6 @@ public class ReportJasperDTO {
     private Double expenseValue;
     private String categoryName;
     private Double totalValue;
+    private Double sumTotal;
+    private Double sumValue;
 }
