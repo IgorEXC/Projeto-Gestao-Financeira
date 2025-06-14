@@ -2,8 +2,10 @@ package com.financas.GestaoFinanceira.resources;
 
 import com.financas.GestaoFinanceira.Services.ReportService;
 import com.financas.GestaoFinanceira.domain.Report;
+import com.financas.GestaoFinanceira.domain.dto.ReportRequestDTO;
 import com.financas.GestaoFinanceira.domain.dto.ReportResponseDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,4 +31,11 @@ public class ReportResource {
 	public Report findUserCpf(@RequestParam String cpf) {
         return service.findByUserCpf(cpf);
 	}
+
+	@PostMapping
+	public ResponseEntity<Void> insert(@RequestBody ReportRequestDTO dto){
+		service.insert(dto);
+		return ResponseEntity.noContent().build();
+	}
+
 }

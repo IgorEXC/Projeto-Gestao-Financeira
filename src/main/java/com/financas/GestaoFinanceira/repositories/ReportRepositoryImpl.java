@@ -16,8 +16,11 @@ public class ReportRepositoryImpl{
             throw new IllegalArgumentException("CPF must be provided");
         }
         StringBuilder jpql = new StringBuilder();
-        jpql.append("SELECT r FROM Report r WHERE r.user.cpf = :cpf");
-        return em.createQuery(jpql.toString(), Report.class)
+        jpql.append("SELECT r.*, u.name, u.email FROM report r ");
+        jpql.append("JOIN user u ON r.user_id = u.id ");
+        jpql.append("WHERE u.cpf = :cpf");
+
+        return (Report) em.createNativeQuery(jpql.toString(), Report.class)
                 .setParameter("cpf", cpf)
                 .getSingleResult();
     }
