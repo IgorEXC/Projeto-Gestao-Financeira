@@ -1,8 +1,24 @@
 package com.financas.GestaoFinanceira.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+
+
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -34,18 +50,15 @@ public class Expense implements Serializable {
 	private Double price;
 
 	@Column(name = "date")
-	private LocalDate date;
+	private LocalDate dateOfPurchase; //data da compra
 
 	@Column(name = "necessary_expense")
 	private Boolean necessaryExpense; // despesa necessária
-	
-	@JsonIgnoreProperties("expenses")
-	@ManyToMany
-	@JoinTable(name = "Category_Expense",
-	joinColumns = @JoinColumn(name = "expense_id"),
-	inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private List<Category> categories = new ArrayList<>();
-	
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@OneToMany(mappedBy = "id.expense", fetch = FetchType.LAZY)
+	private List<UserExpense> userExpenses = new ArrayList<>();
+
 	@JsonIgnoreProperties("userExpenses")
 	@OneToMany(mappedBy = "id.expense")
 	private List<UserExpense> users = new ArrayList<>();
