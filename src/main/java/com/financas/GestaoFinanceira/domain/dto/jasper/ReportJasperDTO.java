@@ -20,5 +20,5 @@ public class ReportJasperDTO {
     private Double sumTotal;
     private Double sumValue;
 
-    List<ReportJasperItensDTO> listExpenses;
+    List<ReportJasperItensDTO> listExpense;
 }
