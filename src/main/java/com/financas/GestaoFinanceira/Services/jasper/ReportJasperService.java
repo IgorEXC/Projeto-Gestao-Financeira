@@ -9,6 +9,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,15 +51,14 @@ private static final String DESTINATION_PATH = "/home/igor/Relatorios Jasper/jas
         Map<String, Object> params = new HashMap<>();
         params.put("id", dto.getId());
         params.put("name", dto.getName()); //tem que ser o mesmo nome dos parametros no Jasper
-        params.put("expenseName", dto.getExpenseName());
         params.put("categoryName", dto.getName());
-        params.put("expenseValue", dto.getExpenseValue());
-        params.put("totalValue", dto.getTotalValue());
         params.put("sumTotal", dto.getSumTotal());
         params.put("sumValue,", dto.getSumValue());
         params.put("background", imagebg);
         params.put("logo", imagelogo);
 
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dto.getListExpenses());
+        params.put("listExpenses", dataSource);
         String absolutePath = getAbsolutePath();
         try{
             String folderDirectory = getDirectorySave("reports-saved/");

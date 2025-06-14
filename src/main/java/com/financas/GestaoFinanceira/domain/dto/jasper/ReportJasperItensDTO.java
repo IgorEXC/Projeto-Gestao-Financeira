@@ -6,19 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReportJasperDTO {
+public class ReportJasperItensDTO {
 
-    private Long id;
-    private String name;
-    private Double sumTotal;
-    private Double sumValue;
+    private String expenseName;
+    private Double expenseValue;
+    private String categoryName;
+    private Double totalValue;
 
-    List<ReportJasperItensDTO> listExpenses;
 }

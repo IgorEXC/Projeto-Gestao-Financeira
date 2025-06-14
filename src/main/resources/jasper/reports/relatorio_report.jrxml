@@ -10,7 +10,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<subDataset name="Dataset1" uuid="baa929bc-6dfd-4b99-8115-d94c61a2c35c">
+	<subDataset name="listExpense" uuid="baa929bc-6dfd-4b99-8115-d94c61a2c35c">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 		<parameter name="totalValue" class="java.lang.Double"/>
 		<parameter name="expenseValue" class="java.lang.Double"/>
@@ -32,6 +32,7 @@
 	<parameter name="logo" class="java.lang.Object"/>
 	<parameter name="sumValue" class="java.lang.Double"/>
 	<parameter name="sumTotal" class="java.lang.Double"/>
+	<parameter name="listExpense" class="java.util.List"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -174,8 +175,21 @@
 			<componentElement>
 				<reportElement x="47" y="10" width="499" height="239" uuid="bf843b3e-862b-420f-94d5-37d2c872c158"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Dataset1" uuid="47c09bd0-a3f6-4d6e-8a57-a820785157f7">
-						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<datasetRun subDataset="listExpense" uuid="196bac40-1ff6-43b7-ac64-11853b1dd403">
+						<datasetParameter name="totalValue">
+							<datasetParameterExpression><![CDATA[$P{totalValue}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expenseValue">
+							<datasetParameterExpression><![CDATA[$P{expenseValue}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="categoryName">
+							<datasetParameterExpression><![CDATA[$P{categoryName}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expenseName">
+							<datasetParameterExpression><![CDATA[$P{expenseName}]]></datasetParameterExpression>
+						</datasetParameter>
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{listExpense})
+]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="239" width="499">
 						<textField>
