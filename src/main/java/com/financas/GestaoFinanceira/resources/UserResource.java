@@ -4,12 +4,14 @@ import com.financas.GestaoFinanceira.Services.UserService;
 import com.financas.GestaoFinanceira.domain.User;
 import com.financas.GestaoFinanceira.domain.dto.UserRequestDTO;
 import com.financas.GestaoFinanceira.domain.dto.UserResponseDTO;
+import com.financas.GestaoFinanceira.domain.mapper.UserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +27,7 @@ import java.util.List;
 public class UserResource {
 
 	private final UserService service;
+	private final UserMapper mapper;
 	
 	@GetMapping(value = "/all")
 	public ResponseEntity<List<UserResponseDTO>> findAllPerPage(@RequestParam int page, @RequestParam int itensPerPage){
@@ -33,7 +36,8 @@ public class UserResource {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id){
-        return ResponseEntity.ok().body(service.findById(id));
+		UserResponseDTO dto = mapper.entityToResponse(service.findById(id));
+        return ResponseEntity.ok().body(dto);
 	}
 
 	@PostMapping(value = "/create")
@@ -42,5 +46,11 @@ public class UserResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(user.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+
+	@PutMapping(value = "/update/{id}")
+	public ResponseEntity<UserRequestDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO dto){
+		service.update(id, dto);
+		return ResponseEntity.ok().build();
 	}
 }

@@ -1,0 +1,23 @@
+package com.financas.GestaoFinanceira.resources.jasper;
+
+import com.financas.GestaoFinanceira.Services.jasper.ReportJasperService;
+import com.financas.GestaoFinanceira.domain.dto.jasper.ReportJasperDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping(value = "/report-pdf")
+public class ReportJasperController {
+
+    private final ReportJasperService service;
+
+    @PostMapping("/generate-report")
+    public void generateReportPdf(ReportJasperDTO dto) throws IOException {
+        service.generateReportPdf(dto);
+    }
+}
