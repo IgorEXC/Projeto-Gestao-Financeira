@@ -31,7 +31,7 @@ public class Category implements Serializable{
 	@Column(name = "predicted_category_limit")
 	private Double predictedCategoryLimit; //limite previsto da categoria
 	
-	@JsonIgnoreProperties("categories")
-	@ManyToMany(mappedBy = "categories")
-	List<Expense> expenses = new ArrayList<>();
+//	@JsonIgnoreProperties("categories")
+//	@ManyToMany(mappedBy = "categories")
+//	List<Expense> expenses = new ArrayList<>();
 }

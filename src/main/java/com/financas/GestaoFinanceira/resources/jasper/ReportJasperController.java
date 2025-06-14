@@ -16,7 +16,7 @@ public class ReportJasperController {
 
     private final ReportJasperService service;
 
-    @PostMapping("/gerar-relatorio")
+    @PostMapping("/generate-report")
     public void generateReportPdf(ReportJasperDTO dto) throws IOException {
         service.generateReportPdf(dto);
     }
