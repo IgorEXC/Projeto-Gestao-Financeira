@@ -1,6 +1,5 @@
 package com.financas.GestaoFinanceira.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,16 +8,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-
-
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -57,14 +56,15 @@ public class Expense implements Serializable {
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "id.expense", fetch = FetchType.LAZY)
-	private List<UserExpense> userExpenses = new ArrayList<>();
-
-	@JsonIgnoreProperties("userExpenses")
-	@OneToMany(mappedBy = "id.expense")
 	private List<UserExpense> users = new ArrayList<>();
-	
-	@JsonIgnoreProperties("expenses")
+
 	@ManyToOne
 	@JoinColumn(name = "financial_planning_id")
 	private FinancialPlanning financialPlanning;
+
+	@ManyToMany
+	@JoinTable(name = "category_expense",
+			joinColumns = @JoinColumn(name = "category_id"),
+			inverseJoinColumns = @JoinColumn(name = "expense_id"))
+	List<Category> categories = new ArrayList<>();
 }

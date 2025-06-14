@@ -63,12 +63,12 @@ private static final String DESTINATION_PATH = "/home/igor/Relatorios Jasper/jas
         try{
             String folderDirectory = getDirectorySave("reports-saved/");
             JasperReport jasperReport = JasperCompileManager.compileReport(absolutePath);
-            LOGGER.info("Report compiled successfully! {} " + absolutePath);
+            LOGGER.info("Report compiled successfully!");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
             LOGGER.info("Report filled successfully! {} " + absolutePath);
             JasperExportManager.exportReportToPdfFile(jasperPrint, absolutePath.replace(".jrxml", ".pdf"));
-            LOGGER.info("Report exported successfully! {} " + absolutePath);
-            LOGGER.info("Report generated successfully! {} " + absolutePath);
+            LOGGER.info("Report exported successfully!");
+            LOGGER.info("Report generated successfully!");
             JasperExportManager.exportReportToPdfFile(jasperPrint, folderDirectory);
         } catch (Exception e) {
             throw new RuntimeException(e);

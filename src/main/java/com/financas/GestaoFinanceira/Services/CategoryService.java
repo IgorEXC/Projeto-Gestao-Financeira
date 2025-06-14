@@ -1,6 +1,7 @@
 package com.financas.GestaoFinanceira.Services;
 
 import com.financas.GestaoFinanceira.domain.Category;
+import com.financas.GestaoFinanceira.domain.dto.CategoryRequestDTO;
 import com.financas.GestaoFinanceira.domain.dto.CategoryResponseDTO;
 import com.financas.GestaoFinanceira.domain.mapper.CategoryMapper;
 import com.financas.GestaoFinanceira.repositories.CategoryRepository;
@@ -26,5 +27,11 @@ public class CategoryService {
 	public CategoryResponseDTO findById(Long id) {
 		Category result = repository.findById(id).orElseThrow();
 		return mapper.entityToResponse(result);
+	}
+
+	@Transactional
+	public Category insert(CategoryRequestDTO category){
+		Category obj = mapper.requestToEntity(category);
+		return repository.save(obj);
 	}
 }
