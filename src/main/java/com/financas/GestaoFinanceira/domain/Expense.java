@@ -8,8 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -65,9 +63,7 @@ public class Expense implements Serializable {
 	@JoinColumn(name = "financial_planning_id")
 	private FinancialPlanning financialPlanning;
 
-	@ManyToMany
-	@JoinTable(name = "category_expense",
-			joinColumns = @JoinColumn(name = "category_id"),
-			inverseJoinColumns = @JoinColumn(name = "expense_id"))
-	List<Category> categories = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "financial_planning_id")
+	private Category category;
 }

@@ -7,7 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -43,6 +43,6 @@ public class Category implements Serializable{
 	private Double predictedCategoryLimit; //limite previsto da categoria
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
-	List<Expense> expenses = new ArrayList<>();
+	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+	private List<Expense> expenses = new ArrayList<>();
 }

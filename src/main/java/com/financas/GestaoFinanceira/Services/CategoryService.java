@@ -24,9 +24,8 @@ public class CategoryService {
 		return result.stream().map(mapper::entityToResponse).toList();
 	}
 
-	public CategoryResponseDTO findById(Long id) {
-		Category result = repository.findById(id).orElseThrow();
-		return mapper.entityToResponse(result);
+	public Category findById(Long id) {
+		return repository.findById(id).orElseThrow();
 	}
 
 	@Transactional

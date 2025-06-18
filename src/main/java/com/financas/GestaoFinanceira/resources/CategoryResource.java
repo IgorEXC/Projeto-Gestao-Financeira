@@ -4,6 +4,7 @@ import com.financas.GestaoFinanceira.Services.CategoryService;
 import com.financas.GestaoFinanceira.domain.Category;
 import com.financas.GestaoFinanceira.domain.dto.CategoryRequestDTO;
 import com.financas.GestaoFinanceira.domain.dto.CategoryResponseDTO;
+import com.financas.GestaoFinanceira.domain.mapper.CategoryMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,8 @@ import java.util.List;
 public class CategoryResource {
 
 	private final CategoryService service;
-	
+	private final CategoryMapper mapper;
+
 	@GetMapping
 	public ResponseEntity<List<CategoryResponseDTO>> findAll(){
 		return ResponseEntity.ok().body(service.findAll());
@@ -32,7 +34,8 @@ public class CategoryResource {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<CategoryResponseDTO> findById(@PathVariable Long id){
-        return ResponseEntity.ok().body(service.findById(id));
+        Category category = service.findById(id);
+		return ResponseEntity.ok().body(mapper.entityToResponse(category));
 	}
 
 	@PostMapping

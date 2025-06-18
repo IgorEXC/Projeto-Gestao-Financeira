@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -26,8 +27,10 @@ public class ExpenseRequestDTO {
 
     private Double price;
 
-    //a data esta vindo nula
-    private LocalDate date;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dateOfPurchase;
 
     private Boolean necessaryExpense;
+
+    private Long categoryId;
 }

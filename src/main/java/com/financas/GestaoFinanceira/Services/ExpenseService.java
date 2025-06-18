@@ -18,6 +18,7 @@ public class ExpenseService {
 
 	private final ExpenseRepository repository;
 	private final ExpenseMapper mapper;
+	private final CategoryService categoryService;
 
 	public List<ExpenseResponseDTO> findAll(){
 		List<Expense> result = repository.findAll();
@@ -32,6 +33,7 @@ public class ExpenseService {
 	@Transactional
 	public Expense insert(ExpenseRequestDTO dto) {
 		Expense expense = mapper.requestToEntity(dto);
+		expense.setCategory(categoryService.findById(dto.getCategoryId()));
 		return repository.save(expense);
 	}
 
