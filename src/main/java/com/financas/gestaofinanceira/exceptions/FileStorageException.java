@@ -6,13 +6,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.io.Serial;
 import java.io.Serializable;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class BusinessException extends RuntimeException implements Serializable {
-    
+@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+public class FileStorageException extends RuntimeException implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
-    
-    public BusinessException(String message) {
+
+    public FileStorageException(String message) {
         super(message);
+    }
+
+    public FileStorageException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

@@ -22,7 +22,7 @@ public class CsvImporter implements FileImporter {
                 .setIgnoreEmptyLines(true)
                 .setTrim(true)
                 .build();
-
+//verificar no chat gpt se existe uma abordatgem melhor para este metodo
         Iterable<CSVRecord> records = format.parse(new InputStreamReader(inputStream));
         return parseRecordsToUserResponseDTO(records);
     }
