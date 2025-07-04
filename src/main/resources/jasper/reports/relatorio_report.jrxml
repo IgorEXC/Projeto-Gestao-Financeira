@@ -10,14 +10,39 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<subDataset name="listExpense" uuid="baa929bc-6dfd-4b99-8115-d94c61a2c35c">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<parameter name="totalValue" class="java.lang.Double"/>
+		<parameter name="expenseValue" class="java.lang.Double"/>
+		<parameter name="expenseName" class="java.lang.String"/>
+		<parameter name="categoryName" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<subDataset name="ExpenseDataset" uuid="fc8fd2c7-0a3c-4e5b-a3ba-8b904c31c717">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="expenseName" class="java.lang.String"/>
+		<field name="categoryName" class="java.lang.String"/>
+		<field name="totalValue" class="java.lang.Double"/>
+		<field name="expenseValue" class="java.lang.Double"/>
+	</subDataset>
 	<parameter name="name" class="java.lang.String"/>
 	<parameter name="expenseName" class="java.lang.String"/>
 	<parameter name="categoryName" class="java.lang.String"/>
 	<parameter name="expenseValue" class="java.lang.Double"/>
-	<parameter name="totalValue" class="java.lang.Double"/>
+	<parameter name="totalValue" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[$P{totalValue}]]></defaultValueExpression>
+	</parameter>
 	<parameter name="background" class="java.lang.Object"/>
 	<parameter name="id" class="java.lang.Long"/>
 	<parameter name="logo" class="java.lang.Object"/>
+	<parameter name="sumValue" class="java.lang.Double"/>
+	<parameter name="sumTotal" class="java.lang.Double"/>
+	<parameter name="listExpense" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -25,7 +50,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="83" splitType="Stretch">
 			<staticText>
 				<reportElement x="168" y="24" width="220" height="30" uuid="b891449d-5f07-4f6e-94d8-8d88faabf0ba"/>
 				<box>
@@ -46,7 +71,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textFieldExpression><![CDATA["Nome: "+ $P{name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Nome: "+$P{name}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="447" y="20" width="100" height="20" uuid="72512bf3-5e8e-40c9-a604-d1c99ce01789">
@@ -59,10 +84,17 @@
 				<reportElement x="47" y="5" width="43" height="44" uuid="075325e9-33d5-4207-b47d-85c7ed91b5df"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="530" y="54" width="55" height="15" uuid="b4415b9b-a4a3-4f85-8f64-1638b88d4693"/>
+				<textElement>
+					<font fontName="DejaVu Sans Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ID:" + $P{id}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="22" splitType="Stretch">
+		<band height="27" splitType="Stretch">
 			<rectangle>
 				<reportElement x="47" y="-2" width="500" height="2" forecolor="rgba(0, 0, 0, 0.0)" backcolor="#6B5555" uuid="f9798564-2128-469c-88ea-802c6416f010">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -144,18 +176,76 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="249" splitType="Stretch">
+		<band height="284" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="0" y="0" width="594" height="249" uuid="4f35c628-0bbb-4132-a0a3-62ece300a2ea"/>
+				<reportElement mode="Transparent" x="0" y="0" width="594" height="249" forecolor="rgba(0, 0, 0, 0.0)" uuid="4f35c628-0bbb-4132-a0a3-62ece300a2ea"/>
 				<imageExpression><![CDATA[$P{background}]]></imageExpression>
 			</image>
+			<rectangle>
+				<reportElement x="47" y="249" width="500" height="20" forecolor="rgba(0, 0, 0, 0.0)" backcolor="#D3D3D3" uuid="f4b9573d-3f36-42ee-a88f-6024dc4470b0">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="47" y="269" width="500" height="2" forecolor="rgba(0, 0, 0, 0.0)" backcolor="#6B5555" uuid="a2c5250e-db4a-48f8-9ecc-cac1a11f5138">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="46" y="249" width="500" height="2" forecolor="rgba(0, 0, 0, 0.0)" backcolor="#6B5555" uuid="c2af8f2e-f936-40ca-ab3f-66de9f698c47">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement x="348" y="252" width="40" height="14" uuid="cdbf48c5-fb7e-4a90-9d4e-82566ac781d3"/>
+				<textFieldExpression><![CDATA[$P{sumValue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="252" width="34" height="19" uuid="f35d4da4-414c-429d-a44b-3c74ce5d2bee"/>
+				<textFieldExpression><![CDATA[$P{sumTotal}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="47" y="0" width="500" height="30" uuid="7934f6a5-b682-4bc8-acf6-9fb2d360ba0f"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="ExpenseDataset" uuid="20036cf7-e9ed-4f5c-a61f-68af24ae7d0a">
+						<dataSourceExpression><![CDATA[$P{listExpense}
+]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="30" width="500">
+						<textField>
+							<reportElement x="45" y="0" width="80" height="20" uuid="72525d78-6b77-4090-b517-eb145f054836">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{categoryName}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="174" y="0" width="80" height="20" uuid="33e54198-d61e-4940-9779-f56fba53dee0">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{expenseName}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="300" y="0" width="80" height="20" uuid="a68005d9-3077-4c52-907b-0f974784396e">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{expenseValue}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="420" y="0" width="80" height="20" uuid="45d71c27-ce7c-4950-a2c8-507ed25fd882">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<textFieldExpression><![CDATA[$F{totalValue}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
