@@ -12,7 +12,7 @@ import java.util.List;
 @Tag(name = "File Endpoint")
 public interface FileControllerDocs {
 
-    UploadFileResponseDTO uploadFile(MultipartFile file) throws IOException;
-    List<UploadFileResponseDTO> uploadMultpartFiles(MultipartFile[] files) throws IOException;
-    ResponseEntity<ResponseEntity> dowloadFile(String fileName, HttpServletRequest request) throws IOException;
+    UploadFileResponseDTO uploadFile(MultipartFile file);
+    List<UploadFileResponseDTO> uploadMultpartFiles(MultipartFile[] files);
+    ResponseEntity<ResponseEntity> dowloadFile(String fileName, HttpServletRequest request);
 }

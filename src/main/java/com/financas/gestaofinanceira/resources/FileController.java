@@ -8,9 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -25,18 +28,22 @@ public class FileController implements FileControllerDocs {
 
     private final FileStorageService fileStorageService;
 
+    @PostMapping("/uploadFile")
     @Override
-    public UploadFileResponseDTO uploadFile(MultipartFile file) throws IOException {
-        return null;
+    public UploadFileResponseDTO uploadFile(@RequestParam("file") MultipartFile file){
+        var fileName = fileStorageService.storeFile(file);
+        var fileDownloadUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/file/v1/dowloadFile")
+                .path(fileName).toUriString();
+        return new UploadFileResponseDTO(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
     @Override
-    public List<UploadFileResponseDTO> uploadMultpartFiles(MultipartFile[] files) throws IOException {
+    public List<UploadFileResponseDTO> uploadMultpartFiles(MultipartFile[] files){
         return List.of();
     }
 
     @Override
-    public ResponseEntity<ResponseEntity> dowloadFile(String fileName, HttpServletRequest request) throws IOException {
+    public ResponseEntity<ResponseEntity> dowloadFile(String fileName, HttpServletRequest request) {
         return null;
     }
 }

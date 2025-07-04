@@ -64,6 +64,6 @@ public class Expense implements Serializable {
 	private FinancialPlanning financialPlanning;
 
 	@ManyToOne
-	@JoinColumn(name = "financial_planning_id")
+	@JoinColumn(name = "category_id")
 	private Category category;
 }
