@@ -13,6 +13,6 @@ import java.util.List;
 public interface FileControllerDocs {
 
     UploadFileResponseDTO uploadFile(MultipartFile file);
-    List<UploadFileResponseDTO> uploadMultpartFiles(MultipartFile[] files);
-    ResponseEntity<ResponseEntity> dowloadFile(String fileName, HttpServletRequest request);
+    List<UploadFileResponseDTO> uploadMultipleFiles(MultipartFile[] files);
+    ResponseEntity<ResponseEntity> downloadFile(String fileName, HttpServletRequest request);
 }

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class FileController implements FileControllerDocs {
     private final FileStorageService fileStorageService;
 
     @PostMapping("/uploadFile")
-    @Override
+    @Override //na requisição postman para upload de arquivos, tem que ser exatamente este nome definido dentro do @RequestParam
     public UploadFileResponseDTO uploadFile(@RequestParam("file") MultipartFile file){
         var fileName = fileStorageService.storeFile(file);
         var fileDownloadUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/file/v1/dowloadFile")
@@ -37,13 +38,16 @@ public class FileController implements FileControllerDocs {
         return new UploadFileResponseDTO(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
+    @PostMapping("/uploadMultipleFiles")
     @Override
-    public List<UploadFileResponseDTO> uploadMultpartFiles(MultipartFile[] files){
-        return List.of();
+    public List<UploadFileResponseDTO> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files){
+        return Arrays.stream(files)
+                .map(this::uploadFile)
+                .toList();
     }
 
     @Override
-    public ResponseEntity<ResponseEntity> dowloadFile(String fileName, HttpServletRequest request) {
+    public ResponseEntity<ResponseEntity> downloadFile(String fileName, HttpServletRequest request) {
         return null;
     }
 }
