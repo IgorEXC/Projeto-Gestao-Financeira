@@ -1,6 +1,6 @@
 package com.financas.gestaofinanceira.resources;
 
-import com.financas.gestaofinanceira.Services.CategoryService;
+import com.financas.gestaofinanceira.services.CategoryService;
 import com.financas.gestaofinanceira.domain.Category;
 import com.financas.gestaofinanceira.domain.dto.CategoryRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.CategoryResponseDTO;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/categories") 
+@RequestMapping(value = "/api/v1/categories")
 public class CategoryResource {
 
 	private final CategoryService service;

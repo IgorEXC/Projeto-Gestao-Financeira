@@ -1,6 +1,6 @@
 package com.financas.gestaofinanceira.resources;
 
-import com.financas.gestaofinanceira.Services.ExpenseService;
+import com.financas.gestaofinanceira.services.ExpenseService;
 import com.financas.gestaofinanceira.domain.dto.ExpenseRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.ExpenseResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/expenses") 
+@RequestMapping(value = "/api/v1/expenses")
 public class ExpenseResource {
 
 	private final ExpenseService service;

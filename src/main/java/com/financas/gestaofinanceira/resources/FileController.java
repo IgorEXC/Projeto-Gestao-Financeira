@@ -1,6 +1,6 @@
 package com.financas.gestaofinanceira.resources;
 
-import com.financas.gestaofinanceira.Services.FileStorageService;
+import com.financas.gestaofinanceira.services.FileStorageService;
 import com.financas.gestaofinanceira.domain.dto.UploadFileResponseDTO;
 import com.financas.gestaofinanceira.resources.docs.FileControllerDocs;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/file/v1")
+@RequestMapping("/api/v1/file")
 public class FileController implements FileControllerDocs {
 
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);

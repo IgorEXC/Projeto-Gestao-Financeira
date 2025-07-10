@@ -1,6 +1,6 @@
 package com.financas.gestaofinanceira.resources;
 
-import com.financas.gestaofinanceira.Services.FinancialPlanningService;
+import com.financas.gestaofinanceira.services.FinancialPlanningService;
 import com.financas.gestaofinanceira.domain.dto.FinancialPlanningResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/financial_plans")
+@RequestMapping(value = "/api/v1/financial_plans")
 public class FinancialPlanningResource {
 
 	private final FinancialPlanningService service;

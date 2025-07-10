@@ -1,4 +1,4 @@
-package com.financas.gestaofinanceira.Services;
+package com.financas.gestaofinanceira.services;
 
 import com.financas.gestaofinanceira.domain.Expense;
 import com.financas.gestaofinanceira.domain.dto.ExpenseRequestDTO;

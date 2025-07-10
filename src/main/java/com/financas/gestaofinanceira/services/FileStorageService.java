@@ -1,4 +1,4 @@
-package com.financas.gestaofinanceira.Services;
+package com.financas.gestaofinanceira.services;
 
 import com.financas.gestaofinanceira.configuration.FileStorageConfig;
 import com.financas.gestaofinanceira.exceptions.FileStorageException;
