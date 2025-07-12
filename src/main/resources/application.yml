@@ -17,3 +17,4 @@ spring:
       max-request-size: 215MB
   profiles:
     active: ${APP_PROFILE:dev}
+

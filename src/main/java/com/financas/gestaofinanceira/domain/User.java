@@ -26,10 +26,10 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable {
+public class User  extends BaseEntity implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;

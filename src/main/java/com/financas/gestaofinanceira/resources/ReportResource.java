@@ -1,6 +1,6 @@
 package com.financas.gestaofinanceira.resources;
 
-import com.financas.gestaofinanceira.Services.ReportService;
+import com.financas.gestaofinanceira.services.ReportService;
 import com.financas.gestaofinanceira.domain.Report;
 import com.financas.gestaofinanceira.domain.dto.ReportRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.ReportResponseDTO;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/reports")
+@RequestMapping(value = "/api/v1/reports")
 public class ReportResource {
 
 	private final ReportService service;

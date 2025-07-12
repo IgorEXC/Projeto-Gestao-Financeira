@@ -1,6 +1,6 @@
 package com.financas.gestaofinanceira.resources;
 
-import com.financas.gestaofinanceira.Services.UserService;
+import com.financas.gestaofinanceira.services.UserService;
 import com.financas.gestaofinanceira.domain.User;
 import com.financas.gestaofinanceira.domain.dto.UserRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.UserResponseDTO;
@@ -23,7 +23,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/api/v1/users")
 public class UserResource {
 
 	private final UserService service;

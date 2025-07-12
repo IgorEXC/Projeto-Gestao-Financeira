@@ -1,6 +1,6 @@
 package com.financas.gestaofinanceira.resources.jasper;
 
-import com.financas.gestaofinanceira.Services.jasper.ReportJasperService;
+import com.financas.gestaofinanceira.services.jasper.ReportJasperService;
 import com.financas.gestaofinanceira.domain.dto.jasper.ReportJasperDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

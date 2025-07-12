@@ -1,4 +1,4 @@
-package com.financas.gestaofinanceira.Services.jasper;
+package com.financas.gestaofinanceira.services.jasper;
 
 import com.financas.gestaofinanceira.domain.dto.jasper.ReportJasperDTO;
 import lombok.RequiredArgsConstructor;
