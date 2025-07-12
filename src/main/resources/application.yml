@@ -17,6 +17,4 @@ spring:
       max-request-size: 215MB
   profiles:
     active: ${APP_PROFILE:dev}
-  flyway:
-    baseline-on-migrate: true
-    baseline-version: 0
+
