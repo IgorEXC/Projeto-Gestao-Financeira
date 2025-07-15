@@ -65,5 +65,4 @@ public class UserService implements BaseSpecs<User> {
 		obj.setId(id);
 		return obj;
 	}
-
 }

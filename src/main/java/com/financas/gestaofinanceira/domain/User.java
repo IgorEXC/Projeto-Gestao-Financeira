@@ -18,6 +18,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,12 @@ public class User  extends BaseEntity implements Serializable {
 
 	@Column(name = "email", length = 50, unique = true, nullable = false)
 	private String email;
+
+	@Column(name = "passoword", length = 40, unique = true)
+	private String password;
+
+	@Column(name = "birthday", length = 10)
+	private LocalDate birthday;
 
 	@Column(name = "monthly_income")
 	private Double monthlyIncome; //renda mensal
