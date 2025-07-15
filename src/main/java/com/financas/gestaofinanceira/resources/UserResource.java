@@ -7,6 +7,7 @@ import com.financas.gestaofinanceira.domain.dto.UserResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.UserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,19 +29,39 @@ public class UserResource {
 
 	private final UserService service;
 	private final UserMapper mapper;
-	
-	@GetMapping(value = "/all")
+
+	@GetMapping(value = "/all",
+			produces = {
+					MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_YAML_VALUE})
 	public ResponseEntity<List<UserResponseDTO>> findAllPerPage(@RequestParam int page, @RequestParam int itensPerPage){
-        return ResponseEntity.ok().body(service.findAllPerPage(page, itensPerPage));
-	}
-	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id){
-		UserResponseDTO dto = mapper.entityToResponse(service.findById(id));
-        return ResponseEntity.ok().body(dto);
+		return ResponseEntity.ok().body(service.findAllPerPage(page, itensPerPage));
 	}
 
-	@PostMapping(value = "/create")
+	@GetMapping(value = "/{id}",
+			produces = {
+					MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_YAML_VALUE},
+			consumes = {
+					MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_YAML_VALUE})
+	public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id){
+		UserResponseDTO dto = mapper.entityToResponse(service.findById(id));
+		return ResponseEntity.ok().body(dto);
+	}
+
+	@PostMapping(value = "/create",
+			produces = {
+					MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_YAML_VALUE},
+			consumes = {
+					MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_YAML_VALUE})
 	public ResponseEntity<UserRequestDTO> createUser(@Valid @RequestBody UserRequestDTO dto) {
 		User user = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -48,7 +69,15 @@ public class UserResource {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@PutMapping(value = "/update/{id}")
+	@PutMapping(value = "/update/{id}",
+			produces = {
+					MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_YAML_VALUE},
+			consumes = {
+					MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_YAML_VALUE})
 	public ResponseEntity<UserRequestDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO dto){
 		service.update(id, dto);
 		return ResponseEntity.ok().build();
