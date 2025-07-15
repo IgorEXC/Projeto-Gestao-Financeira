@@ -7,6 +7,7 @@ import com.financas.gestaofinanceira.domain.dto.CategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.CategoryMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,18 +28,40 @@ public class CategoryResource {
 	private final CategoryService service;
 	private final CategoryMapper mapper;
 
-	@GetMapping
+	@GetMapping(produces = {
+			MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_YAML_VALUE},
+			consumes = {
+					MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_YAML_VALUE})
 	public ResponseEntity<List<CategoryResponseDTO>> findAll(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
-	
-	@GetMapping(value = "/{id}")
+
+	@GetMapping(value = "/{id}",
+			produces = {
+					MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_YAML_VALUE},
+			consumes = {
+					MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_YAML_VALUE})
 	public ResponseEntity<CategoryResponseDTO> findById(@PathVariable Long id){
-        Category category = service.findById(id);
+		Category category = service.findById(id);
 		return ResponseEntity.ok().body(mapper.entityToResponse(category));
 	}
 
-	@PostMapping
+	@PostMapping(produces = {
+			MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_YAML_VALUE},
+			consumes = {
+					MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_YAML_VALUE})
 	public ResponseEntity<Category> insert(@Valid @RequestBody CategoryRequestDTO dto){
 		Category category = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
