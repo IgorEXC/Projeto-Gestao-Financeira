@@ -7,6 +7,7 @@ import com.financas.gestaofinanceira.domain.dto.UserResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.UserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,7 @@ public class UserResource {
 					MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_YAML_VALUE})
-	public ResponseEntity<List<UserResponseDTO>> findAllPerPage(@RequestParam int page, @RequestParam int itensPerPage){
+	public ResponseEntity<CollectionModel<UserResponseDTO>> findAllPerPage(@RequestParam int page, @RequestParam int itensPerPage){
 		return ResponseEntity.ok().body(service.findAllPerPage(page, itensPerPage));
 	}
 

@@ -9,18 +9,15 @@ import com.financas.gestaofinanceira.domain.hateoas.UserHateoasBuilder;
 import com.financas.gestaofinanceira.domain.mapper.UserMapper;
 import com.financas.gestaofinanceira.exceptions.BusinessException;
 import com.financas.gestaofinanceira.repositories.UserRepository;
-import com.financas.gestaofinanceira.resources.UserResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RequiredArgsConstructor
 @Service
@@ -31,13 +28,17 @@ public class UserService implements BaseSpecs<User> {
 	private final UserMapper mapper;
 	private final UserHateoasBuilder hateoasBuilder;
 
-	public List<UserResponseDTO> findAllPerPage(int page, int itensPerPage){
-		Page<User> list = repository.findAll(PageRequest.of(page, itensPerPage));
-		return list.stream().map(user -> {
-			UserResponseDTO dto = mapper.entityToResponse(user);
-			addHateoasLinksList(dto);
-			return dto;
-		}).toList();
+	public CollectionModel<UserResponseDTO> findAllPerPage(int page, int itensPerPage){
+		Page<User> pageResult = repository.findAll(PageRequest.of(page, itensPerPage));
+		List<UserResponseDTO> dtoList = pageResult.stream()
+				.map(mapper::entityToResponse)
+				.map(dto -> {
+					hateoasBuilder.addHateoasLinksList(dto);
+					return dto;
+				})
+				.toList();
+
+		return CollectionModel.of(dtoList);
 	}
 
 	public UserResponseDTO findById(Long id) {
@@ -53,7 +54,7 @@ public class UserService implements BaseSpecs<User> {
 		User obj = mapper.requestToEntity(dto);
 		repository.save(obj);
 		UserResponseDTO dtoResponse = mapper.entityToResponse(obj);
-		addHateoasLinksSingle(dtoResponse, dto);
+		hateoasBuilder.addHateoasLinksSingle(dtoResponse, dto);
 		return dtoResponse;
 	}
 
@@ -67,7 +68,7 @@ public class UserService implements BaseSpecs<User> {
 		obj = updateData(obj.getId(), dto);
 		repository.save(obj);
 		UserResponseDTO dtoResponse = mapper.entityToResponse(obj);
-		addHateoasLinksSingle(dtoResponse, dto);
+		hateoasBuilder.addHateoasLinksSingle(dtoResponse, dto);
 		return dtoResponse;
 	}
 
@@ -81,21 +82,5 @@ public class UserService implements BaseSpecs<User> {
 		return Specification.where(byEquals(User_.name, name))
 				.or(byEquals(User_.cpf, cpf))
 				.or(byEquals(User_.email, email));
-	}
-
-	private void addHateoasLinksSingle(UserResponseDTO dtoResponse, UserRequestDTO dtoRequest) {
-		dtoResponse.add(linkTo(methodOn(UserResource.class).findById(dtoResponse.getId()))
-				.withSelfRel().withType("GET"));
-		dtoResponse.add(linkTo(methodOn(UserResource.class).createUser(dtoRequest)).withRel("Create")
-				.withType("POST"));
-		dtoResponse.add(linkTo(methodOn(UserResource.class).updateUser(dtoResponse.getId(), dtoRequest))
-				.withRel("Update").withType("PUT"));
-	}
-
-	private void addHateoasLinksList(UserResponseDTO dtoResponse) {
-		dtoResponse.add(linkTo(methodOn(UserResource.class).findById(dtoResponse.getId()))
-				.withSelfRel().withType("GET"));
-		dtoResponse.add(linkTo(methodOn(UserResource.class).updateUser(dtoResponse.getId(), null))
-				.withRel("Update").withType("PUT"));
 	}
 }
