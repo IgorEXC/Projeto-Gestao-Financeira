@@ -1,6 +1,5 @@
 package com.financas.gestaofinanceira.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,7 +22,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({"id", "cpf", "name", "email", "username", "birthday", "monthlyIncome"})
+@JsonPropertyOrder({"id", "cpf", "name", "email", "username", "monthlyIncome"})
 public class UserResponseDTO {
 
     private Long id;
@@ -37,7 +36,6 @@ public class UserResponseDTO {
 
     @NotBlank
     @Size(max = 40)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String username;
 
     @NotBlank
@@ -49,6 +47,7 @@ public class UserResponseDTO {
     @Size(max = 40)
     private Double monthlyIncome;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthday;
 }

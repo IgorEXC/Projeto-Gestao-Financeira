@@ -31,21 +31,13 @@ public class CategoryResource {
 	@GetMapping(produces = {
 			MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_YAML_VALUE},
-			consumes = {
-					MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_YAML_VALUE})
+			MediaType.APPLICATION_YAML_VALUE})
 	public ResponseEntity<List<CategoryResponseDTO>> findAll(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
 
 	@GetMapping(value = "/{id}",
 			produces = {
-					MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_YAML_VALUE},
-			consumes = {
 					MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_YAML_VALUE})

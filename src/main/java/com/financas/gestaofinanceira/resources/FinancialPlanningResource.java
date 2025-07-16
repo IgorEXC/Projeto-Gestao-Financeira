@@ -21,21 +21,13 @@ public class FinancialPlanningResource {
 	@GetMapping(produces = {
 			MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_YAML_VALUE},
-			consumes = {
-					MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_YAML_VALUE})
+			MediaType.APPLICATION_YAML_VALUE})
 	public List<FinancialPlanningResponseDTO> findAll(){
 		return service.findAll();
 	}
 
 	@GetMapping(value = "/{id}",
 			produces = {
-					MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_YAML_VALUE},
-			consumes = {
 					MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_YAML_VALUE})

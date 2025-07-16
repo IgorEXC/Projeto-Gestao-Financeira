@@ -43,10 +43,6 @@ public class UserResource {
 			produces = {
 					MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_YAML_VALUE},
-			consumes = {
-					MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_YAML_VALUE})
 	public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id){
 		UserResponseDTO dto = mapper.entityToResponse(service.findById(id));

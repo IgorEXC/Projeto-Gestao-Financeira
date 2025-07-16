@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class ContentNegotiationWebConfig implements WebMvcConfigurer {
 
+    @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer.favorParameter(true)
                 .ignoreAcceptHeader(false)

@@ -21,21 +21,13 @@ public class ReportResource {
 	@GetMapping(produces = {
 			MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_YAML_VALUE},
-			consumes = {
-					MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_YAML_VALUE})
+			MediaType.APPLICATION_YAML_VALUE})
 	public List<ReportResponseDTO> findAll() {
 		return service.findAll();
 	}
 
 	@GetMapping(value = "/{id}",
 			produces = {
-					MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_YAML_VALUE},
-			consumes = {
 					MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_YAML_VALUE})
@@ -45,10 +37,6 @@ public class ReportResource {
 
 	@GetMapping(value = "/by-cpf",
 			produces = {
-					MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_YAML_VALUE},
-			consumes = {
 					MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_YAML_VALUE})

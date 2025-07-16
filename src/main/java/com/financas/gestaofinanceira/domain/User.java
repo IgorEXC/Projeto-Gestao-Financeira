@@ -53,11 +53,11 @@ public class User  extends BaseEntity implements Serializable {
 	@Column(name = "email", length = 50, unique = true, nullable = false)
 	private String email;
 
-	@Column(name = "passoword", length = 40, unique = true)
+	@Column(name = "password", length = 40, unique = true)
 	private String password;
 
-	@Column(name = "birthday", length = 10)
-	private LocalDate birthday;
+	@Column(name = "birthdate", length = 10)
+	private LocalDate birthdate;
 
 	@Column(name = "monthly_income")
 	private Double monthlyIncome; //renda mensal
