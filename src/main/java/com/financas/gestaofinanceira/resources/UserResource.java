@@ -28,7 +28,6 @@ import java.util.List;
 public class UserResource {
 
 	private final UserService service;
-	private final UserMapper mapper;
 
 	@GetMapping(value = "/all",
 			produces = {
@@ -45,7 +44,7 @@ public class UserResource {
 					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_YAML_VALUE})
 	public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id){
-		UserResponseDTO dto = mapper.entityToResponse(service.findById(id));
+		UserResponseDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 
@@ -58,11 +57,11 @@ public class UserResource {
 					MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_YAML_VALUE})
-	public ResponseEntity<UserRequestDTO> createUser(@Valid @RequestBody UserRequestDTO dto) {
-		User user = service.insert(dto);
+	public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO dto) {
+		UserResponseDTO responseDto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(user.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+				.buildAndExpand(responseDto.getId()).toUri();
+		return ResponseEntity.created(uri).body(responseDto);
 	}
 
 	@PutMapping(value = "/update/{id}",
@@ -74,8 +73,7 @@ public class UserResource {
 					MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_YAML_VALUE})
-	public ResponseEntity<UserRequestDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO dto){
-		service.update(id, dto);
-		return ResponseEntity.ok().build();
+	public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO dto){
+		return ResponseEntity.ok().body(service.update(id, dto));
 	}
 }

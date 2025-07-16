@@ -13,17 +13,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 
-//@JsonFilter("PasswordFilter")
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({"id", "cpf", "name", "email", "username", "monthlyIncome"})
-public class UserResponseDTO {
+@JsonPropertyOrder({"id", "cpf", "name", "email", "username", "birthday", "monthlyIncome"})
+public class UserResponseDTO extends RepresentationModel<UserResponseDTO> {
 
     private Long id;
 
@@ -51,3 +51,5 @@ public class UserResponseDTO {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthday;
 }
+
+
