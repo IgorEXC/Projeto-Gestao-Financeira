@@ -1,4 +1,4 @@
-package com.financas.gestaofinanceira.domain.config;
+package com.financas.gestaofinanceira.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;

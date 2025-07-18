@@ -1,4 +1,4 @@
-package com.financas.gestaofinanceira.domain.config;
+package com.financas.gestaofinanceira.configuration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
