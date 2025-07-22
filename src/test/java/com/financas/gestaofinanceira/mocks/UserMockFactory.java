@@ -1,6 +1,7 @@
-package com.financas.gestaofinanceira.domain;
+package com.financas.gestaofinanceira.mocks;
 
 
+import com.financas.gestaofinanceira.domain.User;
 import com.financas.gestaofinanceira.domain.dto.UserRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.UserResponseDTO;
 
