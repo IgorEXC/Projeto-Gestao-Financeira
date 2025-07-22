@@ -50,7 +50,7 @@ public class UserRequestDTO extends RepresentationModel<UserRequestDTO> {
     private String password;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate birthday;
+    private LocalDate birthdate;
 
     /* @Min(0)
     @NotBlank

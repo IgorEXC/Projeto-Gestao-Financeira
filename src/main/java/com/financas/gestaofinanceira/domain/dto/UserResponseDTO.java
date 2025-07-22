@@ -22,7 +22,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({"id", "cpf", "name", "email", "username", "birthday", "monthlyIncome"})
+@JsonPropertyOrder({"id", "cpf", "name", "email", "username", "birthdate", "monthlyIncome"})
 public class UserResponseDTO extends RepresentationModel<UserResponseDTO> {
 
     private Long id;
@@ -49,7 +49,7 @@ public class UserResponseDTO extends RepresentationModel<UserResponseDTO> {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate birthday;
+    private LocalDate birthdate;
 }
 
 
