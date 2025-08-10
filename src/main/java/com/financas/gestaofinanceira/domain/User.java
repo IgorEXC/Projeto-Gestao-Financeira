@@ -71,3 +71,6 @@ public class User  extends BaseEntity implements Serializable {
 	private List<UserExpense> userExpenses = new ArrayList<>();
 
 }
+
+//Criar migrations de todas as classes manualmente para treinar sql
+//e para sumir com erros do flyway
