@@ -3,6 +3,7 @@ package com.financas.gestaofinanceira.domain.pk;
 import java.io.Serial;
 import java.io.Serializable;
 
+import com.financas.gestaofinanceira.domain.BaseEntity;
 import com.financas.gestaofinanceira.domain.User;
 import com.financas.gestaofinanceira.domain.Expense;
 

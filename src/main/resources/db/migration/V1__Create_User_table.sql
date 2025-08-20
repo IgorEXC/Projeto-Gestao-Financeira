@@ -7,8 +7,6 @@ create table tb_user
     name             varchar(40),
     username         varchar(40),
     email            varchar(50) not null,
-    password         varchar(40),
-    birthdate        date,
     monthly_income   decimal,
     data_atualizacao timestamp,
     data_inclusao    timestamp
