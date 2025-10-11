@@ -31,7 +31,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
 @Table(name = "tb_financial_planning") //Planejamento financeiro
-public class FinancialPlanning extends BaseEntity implements Serializable{
+public class FinancialPlanning extends AuditingEntity implements Serializable{
 
 	@Serial
 	private static final long serialVersionUID = 1L;

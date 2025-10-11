@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class XlsxImporter implements FileImporter {
 
@@ -41,13 +42,13 @@ public class XlsxImporter implements FileImporter {
     }
 
     private UserResponseDTO parseRowsToUserResponseDto(Row row) {
-        //usar attomic integer
+        AtomicInteger indice = new AtomicInteger(0);
         UserResponseDTO dto = new UserResponseDTO();
-        dto.setName(row.getCell(0).getStringCellValue());
-        dto.setCpf(row.getCell(1).getStringCellValue());
-        dto.setUsername(row.getCell(2).getStringCellValue());
-        dto.setEmail(row.getCell(3).getStringCellValue());
-        dto.setMonthlyIncome(row.getCell(4).getNumericCellValue());
+        dto.setName(row.getCell(indice.getAndIncrement()).getStringCellValue());
+        dto.setCpf(row.getCell(indice.getAndIncrement()).getStringCellValue());
+        dto.setUsername(row.getCell(indice.getAndIncrement()).getStringCellValue());
+        dto.setEmail(row.getCell(indice.getAndIncrement()).getStringCellValue());
+        dto.setMonthlyIncome(row.getCell(indice.getAndIncrement()).getNumericCellValue());
         return dto;
     }
 

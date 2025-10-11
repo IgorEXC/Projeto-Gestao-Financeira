@@ -1,5 +1,5 @@
 package com.financas.gestaofinanceira.exceptions.handler;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-public record ExceptionResponse(Date timestamp, String message, String details) {}
+public record ExceptionResponse(LocalDateTime timestamp, String message, String details) {}

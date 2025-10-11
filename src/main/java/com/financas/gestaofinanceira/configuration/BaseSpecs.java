@@ -8,11 +8,11 @@ public interface BaseSpecs<T> {
 
     default <D> Specification<T> byEquals(SingularAttribute<T, D> attribute, D attributeValue) {
         return ((root, query, cb) -> {
-            if (!ObjectUtils.isEmpty(attributeValue)) {
-                return cb.equal(root.get(attribute), attributeValue);
-            }
             if(attributeValue instanceof String && !ObjectUtils.isEmpty(attributeValue)){
                 return cb.equal(cb.upper(root.get(attribute).as(String.class)), ((String) attributeValue).toUpperCase());
+            }
+            if (!ObjectUtils.isEmpty(attributeValue)) {
+                return cb.equal(root.get(attribute), attributeValue);
             }
             return cb.and();
         });
@@ -20,11 +20,11 @@ public interface BaseSpecs<T> {
 
     default <D> Specification<T> byNotEquals(SingularAttribute<T, D> attribute, D attributeValue){
         return ((root, query, cb) -> {
-            if (!ObjectUtils.isEmpty(attributeValue)) {
-                return cb.notEqual(root.get(attribute), attributeValue);
-            }
             if(attributeValue instanceof String && !ObjectUtils.isEmpty(attributeValue)){
                 return cb.notEqual(cb.upper(root.get(attribute).as(String.class)), ((String) attributeValue).toUpperCase());
+            }
+            if (!ObjectUtils.isEmpty(attributeValue)) {
+                return cb.notEqual(root.get(attribute), attributeValue);
             }
             return cb.and();
         });

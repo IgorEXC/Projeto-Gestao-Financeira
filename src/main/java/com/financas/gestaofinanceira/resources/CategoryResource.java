@@ -1,5 +1,7 @@
 package com.financas.gestaofinanceira.resources;
 
+import com.financas.gestaofinanceira.annotations.GETMultiFormat;
+import com.financas.gestaofinanceira.annotations.POSTMultiFormat;
 import com.financas.gestaofinanceira.services.CategoryService;
 import com.financas.gestaofinanceira.domain.Category;
 import com.financas.gestaofinanceira.domain.dto.CategoryRequestDTO;
@@ -28,32 +30,18 @@ public class CategoryResource {
 	private final CategoryService service;
 	private final CategoryMapper mapper;
 
-	@GetMapping(produces = {
-			MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_YAML_VALUE})
+	@GETMultiFormat
 	public ResponseEntity<List<CategoryResponseDTO>> findAll(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
 
-	@GetMapping(value = "/{id}",
-			produces = {
-					MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_YAML_VALUE})
+	@GETMultiFormat(value = "/{id}")
 	public ResponseEntity<CategoryResponseDTO> findById(@PathVariable Long id){
 		Category category = service.findById(id);
 		return ResponseEntity.ok().body(mapper.entityToResponse(category));
 	}
 
-	@PostMapping(produces = {
-			MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_YAML_VALUE},
-			consumes = {
-					MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_YAML_VALUE})
+	@POSTMultiFormat
 	public ResponseEntity<Category> insert(@Valid @RequestBody CategoryRequestDTO dto){
 		Category category = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

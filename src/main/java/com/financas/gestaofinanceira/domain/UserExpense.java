@@ -19,7 +19,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
 @Table(name = "tb_user_expense")
-public class UserExpense extends BaseEntity implements Serializable {
+public class UserExpense extends AuditingEntity implements Serializable {
 
 	@EqualsAndHashCode.Include
 	@EmbeddedId

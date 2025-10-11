@@ -30,7 +30,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
 @Table(name = "tb_expense") // Despesa
-public class Expense extends BaseEntity implements Serializable {
+public class Expense extends AuditingEntity implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
