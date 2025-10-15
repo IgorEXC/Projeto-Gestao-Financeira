@@ -27,7 +27,7 @@ import lombok.Setter;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
 @Table(name = "tb_report")
-public class Report extends BaseEntity implements Serializable {
+public class Report extends AuditingEntity implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @ControllerAdvice
@@ -19,7 +20,7 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handlerAllExceptions(Exception ex, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse(
-                new Date(),
+                LocalDateTime.now(),
                 ex.getMessage(),
                 request.getDescription(false));
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -28,7 +29,7 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
     @ExceptionHandler(FileNotFoundException.class)
     public final ResponseEntity<ExceptionResponse> fileNotFoundException(Exception ex, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse(
-                new Date(),
+                LocalDateTime.now(),
                 ex.getMessage(),
                 request.getDescription(false));
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
@@ -37,7 +38,7 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
     @ExceptionHandler(BusinessException.class)
     public final ResponseEntity<ExceptionResponse> businessRuleException(Exception ex, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse(
-                new Date(),
+                LocalDateTime.now(),
                 ex.getMessage(),
                 request.getDescription(false));
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);

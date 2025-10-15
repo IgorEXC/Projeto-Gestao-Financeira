@@ -49,7 +49,7 @@ public class UserService implements BaseSpecs<User> {
 	@Transactional
 	public UserResponseDTO insert(UserRequestDTO dto) {
 		if(repository.exists(existsUserInDataBase(dto.getName(), dto.getCpf(), dto.getEmail()))){
-				throw new BusinessException("User exists!");
+				throw new BusinessException("user.exists");
 		}
 		User obj = mapper.requestToEntity(dto);
 		repository.save(obj);
@@ -63,7 +63,7 @@ public class UserService implements BaseSpecs<User> {
 		User obj = mapper.responseToEntity(findById(id));
 		if(repository.exists(existsUserInDataBase(dto.getName(), dto.getCpf(), dto.getEmail())
 				.and(byNotEquals(User_.id, id)))){
-			throw new BusinessException("User exists!");
+			throw new BusinessException("user.exists");
 		}
 		obj = updateData(obj.getId(), dto);
 		repository.save(obj);
