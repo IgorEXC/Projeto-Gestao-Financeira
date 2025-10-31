@@ -20,5 +20,4 @@ public class CategoryResponseDTO {
     @Size(max = 40)
     private String name;
 
-    private Double predictedCategoryLimit;
 }
