@@ -62,9 +62,6 @@ public class User extends AuditingEntity implements Serializable {
 	@Column(name = "monthly_income")
 	private Double monthlyIncome; //renda mensal
 
-    @Column(name = "predicted_category_limit")
-    private Double predictedCategoryLimit;
-
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<FinancialPlanning> financialPlanning = new ArrayList<>();

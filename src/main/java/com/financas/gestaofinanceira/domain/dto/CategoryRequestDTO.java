@@ -16,4 +16,5 @@ public class CategoryRequestDTO {
 
     private Long id;
     private String name;
+    private Double predictedCategoryLimit;
 }

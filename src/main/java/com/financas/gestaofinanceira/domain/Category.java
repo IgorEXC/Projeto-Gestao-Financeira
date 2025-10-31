@@ -39,6 +39,9 @@ public class Category extends AuditingEntity implements Serializable {
 	@Column(name = "category_name", length = 40, unique = true)
 	private String name;
 
+	@Column(name = "predicted_category_limit")
+	private Double predictedCategoryLimit; //limite previsto da categoria
+
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	private List<Expense> expenses = new ArrayList<>();

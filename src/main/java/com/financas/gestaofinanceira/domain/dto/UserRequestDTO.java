@@ -52,8 +52,6 @@ public class UserRequestDTO extends RepresentationModel<UserRequestDTO> {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthdate;
 
-    private Double predictedCategoryLimit;
-
     /* @Min(0)
     @NotBlank
     @Size(min = 10, max = 11)
