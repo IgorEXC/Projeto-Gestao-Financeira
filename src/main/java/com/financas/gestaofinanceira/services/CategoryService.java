@@ -40,15 +40,18 @@ public class CategoryService {
 		return repository.save(obj);
 	}
 
-    public ExpensesByUserCategoryResponseDTO expensesByUserCategoryResponseDTO(Long userId, Long categoryId){
+    public List<ExpensesByUserCategoryResponseDTO> expensesByUserCategoryResponseDTO(Long userId, Long categoryId){
         if (!repository.existsById(categoryId) && ObjectUtils.isEmpty(userService.findById(userId))){
             throw new BusinessException("User or Category not found!");
         }
-        ExpensesByUserCategoryProjection expensesByUserCategory = repository.getExpensesByUserCategory(userId, categoryId);
-        ExpensesByUserCategoryResponseDTO dto = new ExpensesByUserCategoryResponseDTO();
-        dto.setCategoryName(expensesByUserCategory.getCategoryName());
-        dto.setExpenses(expensesByUserCategory.getExpenses());
-        return dto;
+        List<ExpensesByUserCategoryProjection> result = repository.getExpensesByUserCategory(userId, categoryId);
+        return result.stream().map(projection -> {
+            ExpensesByUserCategoryResponseDTO dto = new ExpensesByUserCategoryResponseDTO();
+            dto.setCategoryName(projection.getCategoryName());
+            dto.setUserName(projection.getUserName());
+            dto.setExpenses(projection.getExpenses());
+            return dto;
+        }).toList();
     }
 
 }

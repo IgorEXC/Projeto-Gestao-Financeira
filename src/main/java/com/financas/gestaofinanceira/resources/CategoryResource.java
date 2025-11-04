@@ -45,7 +45,7 @@ public class CategoryResource {
 	}
 
     @GETMultiFormat(value = "/expenses-by-user-category")
-    public ResponseEntity<ExpensesByUserCategoryResponseDTO> expensesByUserCategory(
+    public ResponseEntity<List<ExpensesByUserCategoryResponseDTO>> expensesByUserCategory(
             @RequestParam(name = "user_id") Long userId,
             @RequestParam(name = "category_id") Long categoryId){
         return ResponseEntity.ok().body(service.expensesByUserCategoryResponseDTO(userId, categoryId));
