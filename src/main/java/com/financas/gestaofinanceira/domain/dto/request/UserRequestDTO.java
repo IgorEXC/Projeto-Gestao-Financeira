@@ -1,4 +1,4 @@
-package com.financas.gestaofinanceira.domain.dto;
+package com.financas.gestaofinanceira.domain.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Email;

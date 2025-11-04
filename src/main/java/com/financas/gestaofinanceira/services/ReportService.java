@@ -1,8 +1,8 @@
 package com.financas.gestaofinanceira.services;
 
 import com.financas.gestaofinanceira.domain.Report;
-import com.financas.gestaofinanceira.domain.dto.ReportRequestDTO;
-import com.financas.gestaofinanceira.domain.dto.ReportResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.request.ReportRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.response.ReportResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ReportMapper;
 import com.financas.gestaofinanceira.repositories.ReportRepository;
 import com.financas.gestaofinanceira.repositories.ReportRepositoryImpl;

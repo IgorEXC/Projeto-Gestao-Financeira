@@ -1,8 +1,8 @@
 package com.financas.gestaofinanceira.domain.mapper;
 
 import com.financas.gestaofinanceira.domain.FinancialPlanning;
-import com.financas.gestaofinanceira.domain.dto.FinancialPlanningRequestDTO;
-import com.financas.gestaofinanceira.domain.dto.FinancialPlanningResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.request.FinancialPlanningRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.response.FinancialPlanningResponseDTO;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

@@ -1,4 +1,5 @@
-package com.financas.gestaofinanceira.domain.dto;
+package com.financas.gestaofinanceira.domain.dto.response;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FinancialPlanningRequestDTO {
+public class FinancialPlanningResponseDTO {
 
     private Long id;
 

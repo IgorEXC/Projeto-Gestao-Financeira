@@ -1,6 +1,6 @@
 package com.financas.gestaofinanceira.services.excel;
 
-import com.financas.gestaofinanceira.domain.dto.UserRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;

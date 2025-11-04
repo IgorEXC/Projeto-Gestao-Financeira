@@ -2,21 +2,16 @@ package com.financas.gestaofinanceira.resources;
 
 import com.financas.gestaofinanceira.annotations.GETMultiFormat;
 import com.financas.gestaofinanceira.annotations.POSTMultiFormat;
+import com.financas.gestaofinanceira.domain.dto.response.ExpensesByUserCategoryResponseDTO;
 import com.financas.gestaofinanceira.services.CategoryService;
 import com.financas.gestaofinanceira.domain.Category;
-import com.financas.gestaofinanceira.domain.dto.CategoryRequestDTO;
-import com.financas.gestaofinanceira.domain.dto.CategoryResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.request.CategoryRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.response.CategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.CategoryMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -48,4 +43,11 @@ public class CategoryResource {
 				.buildAndExpand(category.getId()).toUri();
 		return ResponseEntity.created(uri).body(category);
 	}
+
+    @GETMultiFormat(value = "/expenses-by-user-category")
+    public ResponseEntity<ExpensesByUserCategoryResponseDTO> expensesByUserCategory(
+            @RequestParam(name = "user_id") Long userId,
+            @RequestParam(name = "category_id") Long categoryId){
+        return ResponseEntity.ok().body(service.expensesByUserCategoryResponseDTO(userId, categoryId));
+    }
 }

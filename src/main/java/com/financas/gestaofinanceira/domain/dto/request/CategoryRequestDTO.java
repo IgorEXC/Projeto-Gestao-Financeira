@@ -1,7 +1,6 @@
-package com.financas.gestaofinanceira.domain.dto;
+package com.financas.gestaofinanceira.domain.dto.request;
 
 
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,10 +12,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryResponseDTO {
+public class CategoryRequestDTO {
 
     private Long id;
-
-    @Size(max = 40)
     private String name;
 }

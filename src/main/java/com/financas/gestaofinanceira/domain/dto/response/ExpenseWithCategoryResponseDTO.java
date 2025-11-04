@@ -1,4 +1,4 @@
-package com.financas.gestaofinanceira.domain.dto;
+package com.financas.gestaofinanceira.domain.dto.response;
 
 import lombok.*;
 

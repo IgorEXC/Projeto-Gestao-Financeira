@@ -1,7 +1,7 @@
 package com.financas.gestaofinanceira.services;
 
 import com.financas.gestaofinanceira.domain.FinancialPlanning;
-import com.financas.gestaofinanceira.domain.dto.FinancialPlanningResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.response.FinancialPlanningResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.FinancialPlanningMapper;
 import com.financas.gestaofinanceira.repositories.FinancialPlanningRepository;
 import lombok.RequiredArgsConstructor;

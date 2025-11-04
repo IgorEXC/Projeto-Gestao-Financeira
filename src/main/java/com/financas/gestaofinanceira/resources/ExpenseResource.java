@@ -2,10 +2,10 @@ package com.financas.gestaofinanceira.resources;
 
 import com.financas.gestaofinanceira.annotations.GETMultiFormat;
 import com.financas.gestaofinanceira.annotations.POSTMultiFormat;
-import com.financas.gestaofinanceira.domain.dto.ExpenseWithCategoryResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.response.ExpenseWithCategoryResponseDTO;
 import com.financas.gestaofinanceira.services.ExpenseService;
-import com.financas.gestaofinanceira.domain.dto.ExpenseRequestDTO;
-import com.financas.gestaofinanceira.domain.dto.ExpenseResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.request.ExpenseRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.response.ExpenseResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

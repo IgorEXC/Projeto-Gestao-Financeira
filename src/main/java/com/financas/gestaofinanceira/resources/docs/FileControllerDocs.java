@@ -1,6 +1,6 @@
 package com.financas.gestaofinanceira.resources.docs;
 
-import com.financas.gestaofinanceira.domain.dto.UploadFileResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.response.UploadFileResponseDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.Resource;
