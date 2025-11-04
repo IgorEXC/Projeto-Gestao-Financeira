@@ -2,6 +2,7 @@ package com.financas.gestaofinanceira.resources;
 
 import com.financas.gestaofinanceira.annotations.GETMultiFormat;
 import com.financas.gestaofinanceira.annotations.POSTMultiFormat;
+import com.financas.gestaofinanceira.domain.dto.ExpenseWithCategoryResponseDTO;
 import com.financas.gestaofinanceira.services.ExpenseService;
 import com.financas.gestaofinanceira.domain.dto.ExpenseRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.ExpenseResponseDTO;
@@ -39,5 +40,10 @@ public class ExpenseResource {
 		service.insert(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
+
+    @GETMultiFormat(value = "/category-by-expense/{id}")
+    public ResponseEntity<ExpenseWithCategoryResponseDTO> findCategoryByExpense(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.findCategoryByExpense(id));
+    }
 
 }

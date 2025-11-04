@@ -3,8 +3,11 @@ package com.financas.gestaofinanceira.services;
 import com.financas.gestaofinanceira.domain.Expense;
 import com.financas.gestaofinanceira.domain.dto.ExpenseRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.ExpenseResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.ExpenseWithCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
+import com.financas.gestaofinanceira.repositories.CategoryRepository;
 import com.financas.gestaofinanceira.repositories.ExpenseRepository;
+import com.financas.gestaofinanceira.repositories.projections.ExpenseCategoryProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,5 +39,16 @@ public class ExpenseService {
 		expense.setCategory(categoryService.findById(dto.getCategoryId()));
 		return repository.save(expense);
 	}
+
+    public ExpenseWithCategoryResponseDTO findCategoryByExpense(Long id){
+        ExpenseCategoryProjection categoryByExpenseId = repository.findCategoryByExpenseId(id);
+        if(categoryByExpenseId != null){
+            ExpenseWithCategoryResponseDTO dto = new ExpenseWithCategoryResponseDTO();
+            dto.setCategoryName(categoryByExpenseId.getCategoryName());
+            dto.setExpenseName(categoryByExpenseId.getExpenseName());
+            return dto;
+        }
+        throw new RuntimeException("Category not found!");
+    }
 
 }
