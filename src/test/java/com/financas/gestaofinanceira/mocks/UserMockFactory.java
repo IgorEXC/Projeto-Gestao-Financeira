@@ -2,8 +2,8 @@ package com.financas.gestaofinanceira.mocks;
 
 
 import com.financas.gestaofinanceira.domain.User;
-import com.financas.gestaofinanceira.domain.dto.UserRequestDTO;
-import com.financas.gestaofinanceira.domain.dto.UserResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.response.UserResponseDTO;
 
 import java.time.LocalDate;
 import java.util.Arrays;

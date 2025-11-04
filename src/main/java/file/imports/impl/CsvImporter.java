@@ -1,6 +1,6 @@
 package file.imports.impl;
 
-import com.financas.gestaofinanceira.domain.dto.UserResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.response.UserResponseDTO;
 import file.imports.contract.FileImporter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;

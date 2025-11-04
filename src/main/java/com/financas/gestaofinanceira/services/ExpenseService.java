@@ -1,13 +1,12 @@
 package com.financas.gestaofinanceira.services;
 
 import com.financas.gestaofinanceira.domain.Expense;
-import com.financas.gestaofinanceira.domain.dto.ExpenseRequestDTO;
-import com.financas.gestaofinanceira.domain.dto.ExpenseResponseDTO;
-import com.financas.gestaofinanceira.domain.dto.ExpenseWithCategoryResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.request.ExpenseRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.response.ExpenseResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.response.ExpenseWithCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
-import com.financas.gestaofinanceira.repositories.CategoryRepository;
 import com.financas.gestaofinanceira.repositories.ExpenseRepository;
-import com.financas.gestaofinanceira.repositories.projections.ExpenseCategoryProjection;
+import com.financas.gestaofinanceira.domain.dto.projections.ExpenseCategoryProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

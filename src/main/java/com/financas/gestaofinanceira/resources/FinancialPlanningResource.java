@@ -2,7 +2,7 @@ package com.financas.gestaofinanceira.resources;
 
 import com.financas.gestaofinanceira.annotations.GETMultiFormat;
 import com.financas.gestaofinanceira.services.FinancialPlanningService;
-import com.financas.gestaofinanceira.domain.dto.FinancialPlanningResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.response.FinancialPlanningResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

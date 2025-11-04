@@ -1,7 +1,7 @@
 package com.financas.gestaofinanceira.domain.hateoas;
 
-import com.financas.gestaofinanceira.domain.dto.UserRequestDTO;
-import com.financas.gestaofinanceira.domain.dto.UserResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.response.UserResponseDTO;
 import com.financas.gestaofinanceira.resources.UserResource;
 import org.springframework.stereotype.Component;
 

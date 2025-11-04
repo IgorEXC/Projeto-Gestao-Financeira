@@ -1,6 +1,6 @@
 package com.financas.gestaofinanceira.repositories;
 
-import com.financas.gestaofinanceira.repositories.projections.ExpenseCategoryProjection;
+import com.financas.gestaofinanceira.domain.dto.projections.ExpenseCategoryProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.financas.gestaofinanceira.domain.Expense;

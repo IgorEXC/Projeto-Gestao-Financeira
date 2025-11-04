@@ -20,3 +20,8 @@ spring:
   profiles:
     active: ${APP_PROFILE:dev}
 
+logging:
+  level:
+    root: INFO
+
+

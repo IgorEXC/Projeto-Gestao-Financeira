@@ -1,7 +1,7 @@
 package com.financas.gestaofinanceira.resources.excel;
 
 import com.financas.gestaofinanceira.services.excel.ReportExcelService;
-import com.financas.gestaofinanceira.domain.dto.UserRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
