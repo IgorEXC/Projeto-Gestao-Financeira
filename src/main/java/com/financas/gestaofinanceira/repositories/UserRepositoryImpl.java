@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.financas.gestaofinanceira.domain.User;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
+public interface UserRepositoryImpl extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
     Page<User> findAll(Pageable pageable);
 }

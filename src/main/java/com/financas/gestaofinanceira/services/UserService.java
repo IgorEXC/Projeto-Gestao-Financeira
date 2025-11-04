@@ -8,7 +8,7 @@ import com.financas.gestaofinanceira.domain.dto.UserResponseDTO;
 import com.financas.gestaofinanceira.domain.hateoas.UserHateoasBuilder;
 import com.financas.gestaofinanceira.domain.mapper.UserMapper;
 import com.financas.gestaofinanceira.exceptions.BusinessException;
-import com.financas.gestaofinanceira.repositories.UserRepository;
+import com.financas.gestaofinanceira.repositories.UserRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +24,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class UserService implements BaseSpecs<User> {
 
-	private final UserRepository repository;
+	private final UserRepositoryImpl repository;
 	private final UserMapper mapper;
 	private final UserHateoasBuilder hateoasBuilder;
 
