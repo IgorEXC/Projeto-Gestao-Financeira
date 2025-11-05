@@ -10,5 +10,5 @@ import lombok.*;
 public class ExpensesByUserCategoryResponseDTO {
     private String categoryName;
     private String userName;
-    private ExpenseResponseDTO expenses;
+    private String expense;
 }

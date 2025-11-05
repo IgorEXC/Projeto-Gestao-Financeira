@@ -6,5 +6,5 @@ import com.financas.gestaofinanceira.domain.dto.response.ExpenseResponseDTO;
 public interface ExpensesByUserCategoryProjection {
     String getCategoryName();
     String getUserName();
-    ExpenseResponseDTO getExpenses();
+    String getExpense();
 }

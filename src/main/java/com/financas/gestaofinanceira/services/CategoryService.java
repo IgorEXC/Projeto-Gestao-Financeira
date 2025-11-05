@@ -9,7 +9,6 @@ import com.financas.gestaofinanceira.domain.mapper.CategoryMapper;
 import com.financas.gestaofinanceira.exceptions.BusinessException;
 import com.financas.gestaofinanceira.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -49,7 +48,7 @@ public class CategoryService {
             ExpensesByUserCategoryResponseDTO dto = new ExpensesByUserCategoryResponseDTO();
             dto.setCategoryName(projection.getCategoryName());
             dto.setUserName(projection.getUserName());
-            dto.setExpenses(projection.getExpenses());
+            dto.setExpense(projection.getExpense());
             return dto;
         }).toList();
     }
