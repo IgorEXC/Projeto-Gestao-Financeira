@@ -34,7 +34,7 @@ public class ExpenseResource {
 		return ResponseEntity.ok().body(service.findById(id));
 	}
 
-	@POSTMultiFormat(value = "/create")
+	@POSTMultiFormat/*(value = "/create")*/
 	public ResponseEntity<ExpenseResponseDTO> insert(@RequestBody ExpenseRequestDTO dto){
 		service.insert(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).build();

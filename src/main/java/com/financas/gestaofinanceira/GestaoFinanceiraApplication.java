@@ -23,6 +23,7 @@ public class GestaoFinanceiraApplication {
 * 4 - Ver por que data_atualizacao da auditoria nao esta funcionando.
 * 5 - Data da resposta get do expenses nao esta retornando nada.
 * 6 - Variaveis monetarias passarem para BigDecimal.
+* 7 - Implementar anotação para definir usuários e permissões e usar Reflection
 * */
 
 
