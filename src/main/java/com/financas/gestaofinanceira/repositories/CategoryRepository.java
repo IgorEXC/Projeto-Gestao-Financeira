@@ -7,20 +7,22 @@ import com.financas.gestaofinanceira.domain.Category;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface CategoryRepository extends JpaRepository<Category, Long>{
+import java.util.List;
 
-    //implementar method que retorna todas as despesas de determinada categoria por usuario
+public interface CategoryRepository extends JpaRepository<Category, Long>{
 
     @Query("""
         SELECT 
-            exp.name AS expenses,
-            exp.category.name AS categoryName    
+            exp.name AS expense,
+            exp.category.name AS categoryName,
+            user.name AS userName       
         FROM Expense AS exp
         INNER JOIN UserExpense AS user_exp ON user_exp.id.expense.id = exp.id
         INNER JOIN User AS user ON user.id = user_exp.id.user.id
+        INNER JOIN Category AS cat ON cat.id = exp.category.id   
         WHERE exp.category.id = :categoryId
             AND user.id = :userId
     """)
-    ExpensesByUserCategoryProjection getExpensesByUserCategory(
+    List<ExpensesByUserCategoryProjection> getExpensesByUserCategory(
             @Param("userId") Long userId, @Param("categoryId") Long categoryId);
 }

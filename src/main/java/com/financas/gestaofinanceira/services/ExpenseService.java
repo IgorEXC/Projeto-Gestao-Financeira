@@ -8,9 +8,14 @@ import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
 import com.financas.gestaofinanceira.repositories.ExpenseRepository;
 import com.financas.gestaofinanceira.domain.dto.projections.ExpenseCategoryProjection;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Description;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,9 +27,23 @@ public class ExpenseService {
 	private final ExpenseMapper mapper;
 	private final CategoryService categoryService;
 
-	public List<ExpenseResponseDTO> findAll(){
-		List<Expense> result = repository.findAll();
-		return result.stream().map(mapper::entityToResponse).toList();
+	public Page<ExpenseResponseDTO> findAll(int page, int size) {
+		List<ExpenseResponseDTO> pageResult = repository
+                .findAll(PageRequest.of(page, size))
+                .stream()
+                .map(mapper::entityToResponse)
+                .toList();
+        return new PageImpl<>(pageResult, PageRequest.of(page, size), pageResult.size());
+	}
+
+    @Description("Usado para retornar os dados para o Refine UI")
+    public List<ExpenseResponseDTO> findAll() {
+		return repository
+                .findAll()
+                .stream()
+                .map(mapper::entityToResponse)
+                .sorted(Comparator.comparing(ExpenseResponseDTO::getId))
+                .toList();
 	}
 
 	public ExpenseResponseDTO findById(Long id) {

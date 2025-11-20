@@ -9,7 +9,6 @@ import com.financas.gestaofinanceira.domain.mapper.CategoryMapper;
 import com.financas.gestaofinanceira.exceptions.BusinessException;
 import com.financas.gestaofinanceira.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -40,15 +39,18 @@ public class CategoryService {
 		return repository.save(obj);
 	}
 
-    public ExpensesByUserCategoryResponseDTO expensesByUserCategoryResponseDTO(Long userId, Long categoryId){
+    public List<ExpensesByUserCategoryResponseDTO> expensesByUserCategoryResponseDTO(Long userId, Long categoryId){
         if (!repository.existsById(categoryId) && ObjectUtils.isEmpty(userService.findById(userId))){
             throw new BusinessException("User or Category not found!");
         }
-        ExpensesByUserCategoryProjection expensesByUserCategory = repository.getExpensesByUserCategory(userId, categoryId);
-        ExpensesByUserCategoryResponseDTO dto = new ExpensesByUserCategoryResponseDTO();
-        dto.setCategoryName(expensesByUserCategory.getCategoryName());
-        dto.setExpenses(expensesByUserCategory.getExpenses());
-        return dto;
+        List<ExpensesByUserCategoryProjection> result = repository.getExpensesByUserCategory(userId, categoryId);
+        return result.stream().map(projection -> {
+            ExpensesByUserCategoryResponseDTO dto = new ExpensesByUserCategoryResponseDTO();
+            dto.setCategoryName(projection.getCategoryName());
+            dto.setUserName(projection.getUserName());
+            dto.setExpense(projection.getExpense());
+            return dto;
+        }).toList();
     }
 
 }
