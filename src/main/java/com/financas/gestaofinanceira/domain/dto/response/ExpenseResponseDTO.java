@@ -1,5 +1,6 @@
 package com.financas.gestaofinanceira.domain.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -19,7 +20,8 @@ public class ExpenseResponseDTO {
 
     private Double price;
 
-    private LocalDate date;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateOfPurchase;
 
     private Boolean necessaryExpense;
 }

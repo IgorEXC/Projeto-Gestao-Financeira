@@ -17,13 +17,15 @@ public class GestaoFinanceiraApplication {
 /*
 *                     ------------Ajustes-------------
 * 1 - Implementar despesas atrasadas, despesas pagas, despesas futuras. Planos e projetos
-* ordem de compras pagas ou pendentes, investimentos, gastos essencias, gastos futeis.
-* 2 - Fazer excel e relatorio jasper.
-* 3 - Tratar melhor as excecoes, qnd acontece uma excecao por causa do cpf ele nao avisa.
-* 4 - Ver por que data_atualizacao da auditoria nao esta funcionando.
+* ordem de compras pagas ou pendentes, investimentos, gastos essenciais, gastos fúteis.
+* 2 - Fazer excel e relatório jasper.
+* 3 - Tratar melhor as exceções, qnd acontece uma exceção por causa do cpf ele nao avisa.
+* 4 - Ver por que data_atualização da auditoria nao esta funcionando.
 * 5 - Data da resposta get do expenses nao esta retornando nada.
-* 6 - Variaveis monetarias passarem para BigDecimal.
-* 7 - Implementar anotação para definir usuários e permissões e usar Reflection
+* 6 - Variáveis monetárias passarem para BigDecimal.
+* 7 - Implementar anotação para definir usuários e permissões e usar Reflection para admnistrar users
+* 8 - Ajustar ExpenseResponseDTO para enviar nome e marca da despesa e ajustar migration dele.
+* Talvez o campo description não seja necessário.
 * */
 
 
