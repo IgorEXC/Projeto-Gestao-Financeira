@@ -1,27 +1,13 @@
 package com.financas.gestaofinanceira.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -38,6 +24,7 @@ public class Expense extends AuditingEntity implements Serializable {
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "expense_id")
 	private Long id;
 
 	@Column(name = "name", nullable = false, length = 50)
@@ -55,15 +42,6 @@ public class Expense extends AuditingEntity implements Serializable {
 	@Column(name = "necessary_expense")
 	private Boolean necessaryExpense; // despesa necessária
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@OneToMany(mappedBy = "id.expense", fetch = FetchType.LAZY)
-	private List<UserExpense> users = new ArrayList<>();
-
-	@ManyToOne
-	@JoinColumn(name = "financial_planning_id")
-	private FinancialPlanning financialPlanning;
-
-	@ManyToOne
-	@JoinColumn(name = "category_id")
-	private Category category;
+	@ManyToMany(mappedBy = "expenses")
+	private Set<ProductCategory> productCategory = new HashSet<>();
 }

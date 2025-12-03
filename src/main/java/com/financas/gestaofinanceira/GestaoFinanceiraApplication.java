@@ -26,6 +26,8 @@ public class GestaoFinanceiraApplication {
 * 7 - Implementar anotação para definir usuários e permissões e usar Reflection para admnistrar users
 * 8 - Ajustar ExpenseResponseDTO para enviar nome e marca da despesa e ajustar migration dele.
 * Talvez o campo description não seja necessário.
+* 9 - Um usuário tem varias despesas, mas as despesas são únicas por usuário. O que eu posso
+* ter são produtos que se encaixam nas despesas do usuário.
 * */
 
 

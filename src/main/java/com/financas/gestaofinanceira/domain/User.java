@@ -1,26 +1,14 @@
 package com.financas.gestaofinanceira.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Builder
 @Getter
@@ -62,13 +50,14 @@ public class User extends AuditingEntity implements Serializable {
 	@Column(name = "monthly_income")
 	private Double monthlyIncome; //renda mensal
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<FinancialPlanning> financialPlanning = new ArrayList<>();
+// -- todo: creio que nao precisa dessa associacao nessa parte pois nao é obrigatorio o usuario ter um plano financeiro logo no seu cadastro
+//	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<FinancialPlanning> financialPlanning = new ArrayList<>();
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@OneToMany(mappedBy = "id.user", fetch = FetchType.LAZY)
-	private List<UserExpense> userExpenses = new ArrayList<>();
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private Set<UserCategory> category = new HashSet<>();
 
 }
 

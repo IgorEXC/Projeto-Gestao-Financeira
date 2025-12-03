@@ -1,8 +1,8 @@
-package com.financas.gestaofinanceira.resources;
+package com.financas.gestaofinanceira.controller;
 
 import com.financas.gestaofinanceira.annotations.GETMultiFormat;
-import com.financas.gestaofinanceira.services.FinancialPlanningService;
 import com.financas.gestaofinanceira.domain.dto.response.FinancialPlanningResponseDTO;
+import com.financas.gestaofinanceira.services.FinancialPlanningService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/v1/financial_plans")
-public class FinancialPlanningResource {
+public class FinancialPlanningController {
 
 	private final FinancialPlanningService service;
 
