@@ -1,12 +1,12 @@
-package com.financas.gestaofinanceira.resources;
+package com.financas.gestaofinanceira.controller;
 
 import com.financas.gestaofinanceira.annotations.GETMultiFormat;
 import com.financas.gestaofinanceira.annotations.POSTMultiFormat;
-import com.financas.gestaofinanceira.domain.dto.response.ExpenseWithCategoryResponseDTO;
-import com.financas.gestaofinanceira.services.ExpenseService;
 import com.financas.gestaofinanceira.domain.dto.request.ExpenseRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpenseResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.response.ExpenseWithCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
+import com.financas.gestaofinanceira.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/v1/expenses")
-public class ExpenseResource {
+public class ExpenseController {
 
 	private final ExpenseService service;
 	private final ExpenseMapper mapper;

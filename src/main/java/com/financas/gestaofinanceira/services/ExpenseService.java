@@ -1,12 +1,12 @@
 package com.financas.gestaofinanceira.services;
 
 import com.financas.gestaofinanceira.domain.Expense;
+import com.financas.gestaofinanceira.domain.dto.projections.ExpenseCategoryProjection;
 import com.financas.gestaofinanceira.domain.dto.request.ExpenseRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpenseResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpenseWithCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
 import com.financas.gestaofinanceira.repositories.ExpenseRepository;
-import com.financas.gestaofinanceira.domain.dto.projections.ExpenseCategoryProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
 import org.springframework.data.domain.Page;
@@ -54,7 +54,7 @@ public class ExpenseService {
 	@Transactional
 	public Expense insert(ExpenseRequestDTO dto) {
 		Expense expense = mapper.requestToEntity(dto);
-		expense.setCategory(categoryService.findById(dto.getCategoryId()));
+		//expense.setProductCategory(categoryService.findById(dto.getCategoryId()));
 		return repository.save(expense);
 	}
 

@@ -1,6 +1,5 @@
 package com.financas.gestaofinanceira.configuration;
 
-import jakarta.persistence.criteria.Subquery;
 import jakarta.persistence.metamodel.SingularAttribute;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.ObjectUtils;

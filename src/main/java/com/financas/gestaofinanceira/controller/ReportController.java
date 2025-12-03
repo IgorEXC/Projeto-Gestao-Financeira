@@ -1,11 +1,11 @@
-package com.financas.gestaofinanceira.resources;
+package com.financas.gestaofinanceira.controller;
 
 import com.financas.gestaofinanceira.annotations.GETMultiFormat;
 import com.financas.gestaofinanceira.annotations.POSTMultiFormat;
-import com.financas.gestaofinanceira.services.ReportService;
 import com.financas.gestaofinanceira.domain.Report;
 import com.financas.gestaofinanceira.domain.dto.request.ReportRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ReportResponseDTO;
+import com.financas.gestaofinanceira.services.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/v1/reports")
-public class ReportResource {
+public class ReportController {
 
 	private final ReportService service;
 

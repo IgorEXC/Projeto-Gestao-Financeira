@@ -1,4 +1,4 @@
-package com.financas.gestaofinanceira.resources.docs;
+package com.financas.gestaofinanceira.controller.docs;
 
 import com.financas.gestaofinanceira.domain.dto.response.UploadFileResponseDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
