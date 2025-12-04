@@ -15,6 +15,8 @@ public class ExpenseResponseDTO {
 
     private Long id;
 
+    private String name;
+
     @Size(max = 100)
     private String description;
 

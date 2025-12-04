@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/v1/financial_plans")
+@RequestMapping(value = "/v1/financial_plans")
 public class FinancialPlanningController {
 
 	private final FinancialPlanningService service;

@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class CategoryService {
+public class ProductCategoryService {
 
 	private final ProductCategoryRepository repository;
 	private final CategoryMapper mapper;

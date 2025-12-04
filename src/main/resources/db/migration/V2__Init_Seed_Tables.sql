@@ -23,16 +23,16 @@ INSERT INTO tb_category (category_name, data_inclusao, data_atualizacao) VALUES
 ('Investimentos', NOW(), NOW());
 
 INSERT INTO tb_user_category (category_name, user_user_id, data_inclusao, data_atualizacao) VALUES
-('Gastos Fixos', 1, NOW(), NOW()),
-('Reserva de Emergência', 1, NOW(), NOW()),
-('Viagem de Férias', 2, NOW(), NOW()),
-('Despesas do Carro', 3, NOW(), NOW()),
-('Reforma da Casa', 4, NOW(), NOW()),
-('Faculdade', 6, NOW(), NOW()),
-('Lazer Fim de Semana', 7, NOW(), NOW()),
-('Investimento Ações', 9, NOW(), NOW()),
-('Presentes', 5, NOW(), NOW()),
-('Assinaturas', 8, NOW(), NOW());
+('Gastos Fixos', (SELECT user_id FROM tb_user WHERE username = 'carlossilva'), NOW(), NOW()),
+('Reserva de Emergência', (SELECT user_id FROM tb_user WHERE username = 'carlossilva'), NOW(), NOW()),
+('Viagem de Férias', (SELECT user_id FROM tb_user WHERE username = 'anasouza'), NOW(), NOW()),
+('Despesas do Carro', (SELECT user_id FROM tb_user WHERE username = 'marcosoli'), NOW(), NOW()),
+('Reforma da Casa', (SELECT user_id FROM tb_user WHERE username = 'felima'), NOW(), NOW()),
+('Faculdade', (SELECT user_id FROM tb_user WHERE username = 'jucosta'), NOW(), NOW()),
+('Lazer Fim de Semana', (SELECT user_id FROM tb_user WHERE username = 'pedrinho'), NOW(), NOW()),
+('Investimento Ações', (SELECT user_id FROM tb_user WHERE username = 'lucasp'), NOW(), NOW()),
+('Presentes', (SELECT user_id FROM tb_user WHERE username = 'betosantos'), NOW(), NOW()),
+('Assinaturas', (SELECT user_id FROM tb_user WHERE username = 'maridias'), NOW(), NOW());
 
 INSERT INTO tb_expense (name, description, price, date, necessary_expense, data_inclusao, data_atualizacao) VALUES
 ('Supermercado Semanal', 'Compras da semana no Extra', 450.00, '2023-10-01', true, NOW(), NOW()),
@@ -47,13 +47,13 @@ INSERT INTO tb_expense (name, description, price, date, necessary_expense, data_
 ('Tênis Novo', 'Nike Air Force', 600.00, '2023-10-28', false, NOW(), NOW());
 
 INSERT INTO tb_category_expense (category_id, expense_id) VALUES
-(1, 1), -- Alimentação -> Supermercado
-(2, 2), -- Transporte -> Uber
-(6, 3), -- Lazer -> Netflix
-(3, 4), -- Moradia -> Conta de Luz
-(4, 5), -- Saúde -> Farmácia
-(6, 6), -- Lazer -> Cinema
-(2, 7), -- Transporte -> Gasolina
-(5, 8), -- Educação -> Curso Java
-(1, 9), -- Alimentação -> Jantar Fora
-(7, 10); -- Vestuário -> Tênis Novo
+((SELECT category_id FROM tb_category WHERE category_name = 'Alimentação'), (SELECT expense_id FROM tb_expense WHERE name = 'Supermercado Semanal')),
+((SELECT category_id FROM tb_category WHERE category_name = 'Transporte'), (SELECT expense_id FROM tb_expense WHERE name = 'Uber Trabalho')),
+((SELECT category_id FROM tb_category WHERE category_name = 'Lazer'), (SELECT expense_id FROM tb_expense WHERE name = 'Netflix')),
+((SELECT category_id FROM tb_category WHERE category_name = 'Moradia'), (SELECT expense_id FROM tb_expense WHERE name = 'Conta de Luz')),
+((SELECT category_id FROM tb_category WHERE category_name = 'Saúde'), (SELECT expense_id FROM tb_expense WHERE name = 'Farmácia')),
+((SELECT category_id FROM tb_category WHERE category_name = 'Lazer'), (SELECT expense_id FROM tb_expense WHERE name = 'Cinema')),
+((SELECT category_id FROM tb_category WHERE category_name = 'Transporte'), (SELECT expense_id FROM tb_expense WHERE name = 'Gasolina')),
+((SELECT category_id FROM tb_category WHERE category_name = 'Educação'), (SELECT expense_id FROM tb_expense WHERE name = 'Curso Java')),
+((SELECT category_id FROM tb_category WHERE category_name = 'Alimentação'), (SELECT expense_id FROM tb_expense WHERE name = 'Jantar Fora')),
+((SELECT category_id FROM tb_category WHERE category_name = 'Vestuário'), (SELECT expense_id FROM tb_expense WHERE name = 'Tênis Novo'));
