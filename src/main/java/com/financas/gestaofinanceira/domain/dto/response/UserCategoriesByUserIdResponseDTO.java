@@ -1,7 +1,16 @@
 package com.financas.gestaofinanceira.domain.dto.response;
 
-public record UserCategoriesByUserIdResponseDTO(
-        String categoryName,
-        String expense
-) {
+import jakarta.annotation.Nullable;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+public interface UserCategoriesByUserIdResponseDTO{
+        String getUserName();
+        String getCpf();
+        String getCategoryName();
+        String getExpense();
+        BigDecimal getExpensePrice();
+        @Nullable LocalDate getDateOfPurchase();
+        @Nullable Boolean getNecessaryExpense();
 }

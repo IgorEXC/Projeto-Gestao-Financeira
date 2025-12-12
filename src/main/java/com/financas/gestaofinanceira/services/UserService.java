@@ -1,7 +1,6 @@
 package com.financas.gestaofinanceira.services;
 
 import com.financas.gestaofinanceira.configuration.BaseSpecs;
-import com.financas.gestaofinanceira.domain.ProductCategory;
 import com.financas.gestaofinanceira.domain.User;
 import com.financas.gestaofinanceira.domain.User_;
 import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -30,8 +28,6 @@ public class UserService implements BaseSpecs<User> {
 	private final UserRepositoryRepository repository;
 	private final UserMapper mapper;
 	private final UserHateoasBuilder hateoasBuilder;
-    private final ExpenseService expenseService;
-    private final ProductCategoryService productCategoryService;
 
 	public CollectionModel<UserResponseDTO> findAllPerPage(int page, int itensPerPage){
 		Page<User> pageResult = repository.findAll(PageRequest.of(page, itensPerPage));
@@ -91,6 +87,7 @@ public class UserService implements BaseSpecs<User> {
 	}
 
     //retornar user com despesas por id do user
+    //passar para ExpenseService
     public ExpensesByUserResponseDTO getExpensesByUserId(Long userId){
         UserResponseDTO user = this.findById(userId);
         var dto = new ExpensesByUserResponseDTO();
@@ -98,12 +95,4 @@ public class UserService implements BaseSpecs<User> {
         return null;
     }
 
-    //retornar categorias com as despesas de cada categoria por id do user
-    //use streams para agrupar por categorias e ordenar tambem por categorias
-    //crie outro dto que comportara o nome do usuario e dentro dele crie uma lista
-    //que recebera o resultado dessa consulta. Creio que ele sim pode ser um record
-    public List<ExpensesByUserResponseDTO> getCategoriesWithExpenseByUserId(Long userId){
-        UserResponseDTO user = this.findById(userId);
-        return null;
-    }
 }

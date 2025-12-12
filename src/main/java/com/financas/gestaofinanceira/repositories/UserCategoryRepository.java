@@ -23,8 +23,30 @@ public interface UserCategoryRepository extends JpaRepository<UserCategory, Long
     """)
     List<ExpensesByUserCategoryProjection> getExpensesByUserCategory(
             @Param("userId") Long userId, @Param("categoryId") Long categoryId);
-    @Query("""
+    //essa consulta tambem esta errada
+
+    @Query(value = """
+        SELECT
+            user.name AS userName,
+            user.cpf AS cpf,
+            cat.name AS categoryName,
+            exp.name AS expense,
+            exp.price AS expensePrice,
+            exp.dateOfPurchase AS dateOfPurchase,
+            exp.necessaryExpense AS necessaryExpense
+        FROM UserCategory AS cat
+                INNER JOIN User AS user ON cat.user.id = user.id
+                INNER JOIN cat.expenses exp
+            WHERE user.id = :userId
+        GROUP BY
+            cat.name,
+            exp.name,
+            user.name,
+            user.cpf,
+            exp.price,
+            exp.dateOfPurchase,
+            exp.necessaryExpense
+        ORDER BY cat.name
     """)
-    List<UserCategoriesByUserIdResponseDTO> getAllUserCategoriesByUserId(
-            @Param("userId") Long userId);
+    List<UserCategoriesByUserIdResponseDTO> getAllUserCategoriesByUserId(@Param("userId") Long userId);
 }
