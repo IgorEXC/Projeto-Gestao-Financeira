@@ -10,7 +10,9 @@ public interface UserCategoriesByUserIdResponseDTO{
         String getCpf();
         String getCategoryName();
         String getExpense();
+        @Nullable String getDescription();
         BigDecimal getExpensePrice();
         @Nullable LocalDate getDateOfPurchase();
         @Nullable Boolean getNecessaryExpense();
+        @Nullable Integer getExpenseAccounting();
 }

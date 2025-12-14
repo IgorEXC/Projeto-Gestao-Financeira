@@ -31,9 +31,11 @@ public interface UserCategoryRepository extends JpaRepository<UserCategory, Long
             user.cpf AS cpf,
             cat.name AS categoryName,
             exp.name AS expense,
+            exp.description AS description,
             exp.price AS expensePrice,
             exp.dateOfPurchase AS dateOfPurchase,
-            exp.necessaryExpense AS necessaryExpense
+            exp.necessaryExpense AS necessaryExpense,
+            COUNT(exp.name) AS expenseAccounting
         FROM UserCategory AS cat
                 INNER JOIN User AS user ON cat.user.id = user.id
                 INNER JOIN cat.expenses exp
@@ -41,6 +43,7 @@ public interface UserCategoryRepository extends JpaRepository<UserCategory, Long
         GROUP BY
             cat.name,
             exp.name,
+            exp.description,
             user.name,
             user.cpf,
             exp.price,
@@ -49,4 +52,5 @@ public interface UserCategoryRepository extends JpaRepository<UserCategory, Long
         ORDER BY cat.name
     """)
     List<UserCategoriesByUserIdResponseDTO> getAllUserCategoriesByUserId(@Param("userId") Long userId);
+    //concertar contador de colunas
 }

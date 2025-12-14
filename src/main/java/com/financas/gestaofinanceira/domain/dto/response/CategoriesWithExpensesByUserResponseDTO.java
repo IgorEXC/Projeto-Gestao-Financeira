@@ -10,11 +10,10 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExpensesByUserResponseDTO implements Serializable {
-
+public class CategoriesWithExpensesByUserResponseDTO implements Serializable {
     String name;
     String cpf;
-    List<ExpenseResponseDTO> expenses;
+    List<CategoriesWithExpensesResponseDTO> expenses;
 }
 
 

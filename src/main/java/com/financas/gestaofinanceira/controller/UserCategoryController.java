@@ -1,7 +1,7 @@
 package com.financas.gestaofinanceira.controller;
 
 import com.financas.gestaofinanceira.annotations.GETMultiFormat;
-import com.financas.gestaofinanceira.domain.dto.response.ExpensesByUserResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.response.CategoriesWithExpensesByUserResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.UserCategoriesByUserIdResponseDTO;
 import com.financas.gestaofinanceira.services.UserCategoryService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class UserCategoryController {
     private final UserCategoryService userCategoryService;
 
     @GETMultiFormat("/{id}")
-    public ResponseEntity<List<ExpensesByUserResponseDTO>> getAllUserCategories(@PathVariable Long id) {
+    public ResponseEntity<List<CategoriesWithExpensesByUserResponseDTO>> getAllUserCategories(@PathVariable Long id) {
         return ResponseEntity.ok().body(userCategoryService.getCategoriesWithExpenseByUserId(id));
     }
 

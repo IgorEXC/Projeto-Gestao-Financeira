@@ -4,7 +4,7 @@ import com.financas.gestaofinanceira.configuration.BaseSpecs;
 import com.financas.gestaofinanceira.domain.User;
 import com.financas.gestaofinanceira.domain.User_;
 import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
-import com.financas.gestaofinanceira.domain.dto.response.ExpensesByUserResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.response.CategoriesWithExpensesByUserResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.UserResponseDTO;
 import com.financas.gestaofinanceira.domain.hateoas.UserHateoasBuilder;
 import com.financas.gestaofinanceira.domain.mapper.UserMapper;
@@ -88,9 +88,9 @@ public class UserService implements BaseSpecs<User> {
 
     //retornar user com despesas por id do user
     //passar para ExpenseService
-    public ExpensesByUserResponseDTO getExpensesByUserId(Long userId){
+    public CategoriesWithExpensesByUserResponseDTO getExpensesByUserId(Long userId){
         UserResponseDTO user = this.findById(userId);
-        var dto = new ExpensesByUserResponseDTO();
+        var dto = new CategoriesWithExpensesByUserResponseDTO();
 
         return null;
     }
