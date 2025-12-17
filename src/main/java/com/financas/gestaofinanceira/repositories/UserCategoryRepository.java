@@ -34,21 +34,11 @@ public interface UserCategoryRepository extends JpaRepository<UserCategory, Long
             exp.description AS description,
             exp.price AS expensePrice,
             exp.dateOfPurchase AS dateOfPurchase,
-            exp.necessaryExpense AS necessaryExpense,
-            COUNT(exp.name) AS expenseAccounting
+            exp.necessaryExpense AS necessaryExpense
         FROM UserCategory AS cat
                 INNER JOIN User AS user ON cat.user.id = user.id
                 INNER JOIN cat.expenses exp
             WHERE user.id = :userId
-        GROUP BY
-            cat.name,
-            exp.name,
-            exp.description,
-            user.name,
-            user.cpf,
-            exp.price,
-            exp.dateOfPurchase,
-            exp.necessaryExpense
         ORDER BY cat.name
     """)
     List<UserCategoriesByUserIdResponseDTO> getAllUserCategoriesByUserId(@Param("userId") Long userId);

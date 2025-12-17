@@ -2,6 +2,7 @@ package com.financas.gestaofinanceira.domain.dto.response;
 
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Builder
@@ -11,6 +12,13 @@ import java.util.List;
 @NoArgsConstructor
 public class CategoriesWithExpensesResponseDTO {
     String categoryName;
-    Integer expenseAccounting;
+    Integer qtdExpenses;
+    BigDecimal totalPrice;
     List<ExpensesWithUserCategoryResponseDTO> expenses;
+
+//    public void getTotalPrice() {
+//        for (ExpensesWithUserCategoryResponseDTO dto : expenses) {
+//            totalPrice = totalPrice.add(dto.getPrice());
+//        }
+//    }
 }

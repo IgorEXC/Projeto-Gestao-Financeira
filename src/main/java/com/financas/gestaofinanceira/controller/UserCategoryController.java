@@ -20,7 +20,7 @@ public class UserCategoryController {
     private final UserCategoryService userCategoryService;
 
     @GETMultiFormat("/{id}")
-    public ResponseEntity<List<CategoriesWithExpensesByUserResponseDTO>> getAllUserCategories(@PathVariable Long id) {
+    public ResponseEntity<CategoriesWithExpensesByUserResponseDTO> getAllUserCategories(@PathVariable Long id) {
         return ResponseEntity.ok().body(userCategoryService.getCategoriesWithExpenseByUserId(id));
     }
 

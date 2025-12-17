@@ -13,7 +13,7 @@ import java.util.List;
 public class CategoriesWithExpensesByUserResponseDTO implements Serializable {
     String name;
     String cpf;
-    List<CategoriesWithExpensesResponseDTO> expenses;
+    List<CategoriesWithExpensesResponseDTO> categories;
 }
 
 

@@ -14,5 +14,4 @@ public interface UserCategoriesByUserIdResponseDTO{
         BigDecimal getExpensePrice();
         @Nullable LocalDate getDateOfPurchase();
         @Nullable Boolean getNecessaryExpense();
-        @Nullable Integer getExpenseAccounting();
 }
