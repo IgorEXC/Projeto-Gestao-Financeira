@@ -4,11 +4,12 @@ import com.financas.gestaofinanceira.configuration.BaseSpecs;
 import com.financas.gestaofinanceira.domain.User;
 import com.financas.gestaofinanceira.domain.User_;
 import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.response.CategoriesWithExpensesByUserResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.UserResponseDTO;
 import com.financas.gestaofinanceira.domain.hateoas.UserHateoasBuilder;
 import com.financas.gestaofinanceira.domain.mapper.UserMapper;
 import com.financas.gestaofinanceira.exceptions.BusinessException;
-import com.financas.gestaofinanceira.repositories.UserRepositoryImpl;
+import com.financas.gestaofinanceira.repositories.UserRepositoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +25,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class UserService implements BaseSpecs<User> {
 
-	private final UserRepositoryImpl repository;
+	private final UserRepositoryRepository repository;
 	private final UserMapper mapper;
 	private final UserHateoasBuilder hateoasBuilder;
 
@@ -42,7 +43,8 @@ public class UserService implements BaseSpecs<User> {
 	}
 
 	public UserResponseDTO findById(Long id) {
-		User obj = repository.findById(id).orElseThrow();
+		User obj = repository.findById(id)
+                .orElseThrow(() -> new BusinessException("user not found"));
 		return mapper.entityToResponse(obj);
 	}
 
@@ -83,4 +85,14 @@ public class UserService implements BaseSpecs<User> {
 				.or(byEquals(User_.cpf, cpf))
 				.or(byEquals(User_.email, email));
 	}
+
+    //retornar user com despesas por id do user
+    //passar para ExpenseService
+    public CategoriesWithExpensesByUserResponseDTO getExpensesByUserId(Long userId){
+        UserResponseDTO user = this.findById(userId);
+        var dto = new CategoriesWithExpensesByUserResponseDTO();
+
+        return null;
+    }
+
 }

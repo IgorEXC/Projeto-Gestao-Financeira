@@ -7,7 +7,7 @@ import com.financas.gestaofinanceira.domain.dto.request.CategoryRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.response.CategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpensesByUserCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.CategoryMapper;
-import com.financas.gestaofinanceira.services.CategoryService;
+import com.financas.gestaofinanceira.services.ProductCategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +19,10 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/v1/categories")
+@RequestMapping(value = "/v1/categories")
 public class CategoryController {
 
-	private final CategoryService service;
+	private final ProductCategoryService service;
 	private final CategoryMapper mapper;
 
 	@GETMultiFormat

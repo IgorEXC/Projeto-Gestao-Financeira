@@ -25,7 +25,7 @@ public class ExpenseService {
 
 	private final ExpenseRepository repository;
 	private final ExpenseMapper mapper;
-	private final CategoryService categoryService;
+	private final ProductCategoryService productCategoryService;
 
 	public Page<ExpenseResponseDTO> findAll(int page, int size) {
 		List<ExpenseResponseDTO> pageResult = repository

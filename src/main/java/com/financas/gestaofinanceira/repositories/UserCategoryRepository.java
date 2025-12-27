@@ -2,6 +2,7 @@ package com.financas.gestaofinanceira.repositories;
 
 import com.financas.gestaofinanceira.domain.UserCategory;
 import com.financas.gestaofinanceira.domain.dto.projections.ExpensesByUserCategoryProjection;
+import com.financas.gestaofinanceira.domain.dto.response.UserCategoriesByUserIdResponseDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,4 +23,24 @@ public interface UserCategoryRepository extends JpaRepository<UserCategory, Long
     """)
     List<ExpensesByUserCategoryProjection> getExpensesByUserCategory(
             @Param("userId") Long userId, @Param("categoryId") Long categoryId);
+    //essa consulta tambem esta errada
+
+    @Query(value = """
+        SELECT
+            user.name AS userName,
+            user.cpf AS cpf,
+            cat.name AS categoryName,
+            exp.name AS expense,
+            exp.description AS description,
+            exp.price AS expensePrice,
+            exp.dateOfPurchase AS dateOfPurchase,
+            exp.necessaryExpense AS necessaryExpense
+        FROM UserCategory AS cat
+                INNER JOIN User AS user ON cat.user.id = user.id
+                INNER JOIN cat.expenses exp
+            WHERE user.id = :userId
+        ORDER BY cat.name
+    """)
+    List<UserCategoriesByUserIdResponseDTO> getAllUserCategoriesByUserId(@Param("userId") Long userId);
+    //concertar contador de colunas
 }

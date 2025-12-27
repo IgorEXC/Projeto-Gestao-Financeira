@@ -17,7 +17,7 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/v1/users")
+@RequestMapping(value = "/v1/users")
 public class UserController {
 
 	private final UserService service;
