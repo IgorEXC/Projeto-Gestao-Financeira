@@ -17,12 +17,12 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/users")
+@RequestMapping(value = "/users")
 public class UserController {
 
 	private final UserService service;
 
-	@GETMultiFormat(value = "/all")
+	@GETMultiFormat
 	public ResponseEntity<CollectionModel<UserResponseDTO>> findAllPerPage(@RequestParam int page, @RequestParam int itensPerPage){
 		return ResponseEntity.ok().body(service.findAllPerPage(page, itensPerPage));
 	}
@@ -33,7 +33,7 @@ public class UserController {
 		return ResponseEntity.ok().body(dto);
 	}
 
-	@POSTMultiFormat(value = "/create")
+	@POSTMultiFormat
 	public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO dto) {
 		UserResponseDTO responseDto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -41,7 +41,7 @@ public class UserController {
 		return ResponseEntity.created(uri).body(responseDto);
 	}
 
-	@PUTMultiFormat(value = "/update/{id}")
+	@PUTMultiFormat(value = "/{id}")
 	public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO dto){
 		return ResponseEntity.ok().body(service.update(id, dto));
 	}

@@ -1,6 +1,6 @@
 package com.financas.gestaofinanceira.services;
 
-import com.financas.gestaofinanceira.configuration.BaseSpecs;
+import com.financas.gestaofinanceira.repositories.utils.BaseSpecs;
 import com.financas.gestaofinanceira.domain.User;
 import com.financas.gestaofinanceira.domain.User_;
 import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
@@ -9,12 +9,13 @@ import com.financas.gestaofinanceira.domain.dto.response.UserResponseDTO;
 import com.financas.gestaofinanceira.domain.hateoas.UserHateoasBuilder;
 import com.financas.gestaofinanceira.domain.mapper.UserMapper;
 import com.financas.gestaofinanceira.exceptions.BusinessException;
-import com.financas.gestaofinanceira.repositories.UserRepositoryRepository;
+import com.financas.gestaofinanceira.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +26,10 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class UserService implements BaseSpecs<User> {
 
-	private final UserRepositoryRepository repository;
+	private final UserRepository repository;
 	private final UserMapper mapper;
 	private final UserHateoasBuilder hateoasBuilder;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
 	public CollectionModel<UserResponseDTO> findAllPerPage(int page, int itensPerPage){
 		Page<User> pageResult = repository.findAll(PageRequest.of(page, itensPerPage));
@@ -77,6 +79,7 @@ public class UserService implements BaseSpecs<User> {
 	private User updateData(Long id, UserRequestDTO dto) {
 		User obj = mapper.requestToEntity(dto);
 		obj.setId(id);
+        obj.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 		return obj;
 	}
 

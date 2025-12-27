@@ -35,9 +35,8 @@ public class UserRequestDTO extends RepresentationModel<UserRequestDTO> {
     @NotNull
     private Double monthlyIncome;
 
-    @Min(8)
     @Max(40)
-    @Size(max = 40)
+    @Size(min = 8, max = 40)
     private String password;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
