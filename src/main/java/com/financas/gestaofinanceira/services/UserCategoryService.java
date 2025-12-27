@@ -62,16 +62,17 @@ public class UserCategoryService implements FuncaoUtil {
                 .collect(
                         Collectors.groupingBy(UserCategoriesByUserIdResponseDTO::getCategoryName, LinkedHashMap::new, Collectors.toList()
                         )).entrySet().stream().map(this::buildUserCategory).toList();
-        int index = 0;
-        BigDecimal totalPrice = BigDecimal.ZERO;
-        for(CategoriesWithExpensesResponseDTO dto : result){
-            totalPrice = totalPrice.add(getSafeValue(dto.getExpenses().get(index++).getPrice()));
-            if(index > result.size()){
-                dto.setTotalPrice(totalPrice);
-                break;
-            }
+        for (CategoriesWithExpensesResponseDTO dto : result) {
+            var total = buildTotalExpensesByCategory(dto.getExpenses());
+            dto.setTotalPrice(total);
         }
         return result;
+    }
+
+    private BigDecimal buildTotalExpensesByCategory(List<ExpensesWithUserCategoryResponseDTO> result){
+        return result.stream()
+                .map(ExpensesWithUserCategoryResponseDTO::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     private CategoriesWithExpensesResponseDTO buildUserCategory(@NotNull Map.Entry<String, List<UserCategoriesByUserIdResponseDTO>> entry) {
