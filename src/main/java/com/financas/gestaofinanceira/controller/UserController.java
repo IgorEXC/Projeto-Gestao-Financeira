@@ -17,7 +17,7 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/v1/users")
 public class UserController {
 
 	private final UserService service;
@@ -41,8 +41,13 @@ public class UserController {
 		return ResponseEntity.created(uri).body(responseDto);
 	}
 
-	@PUTMultiFormat(value = "/{id}")
-	public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO dto){
-		return ResponseEntity.ok().body(service.update(id, dto));
+	@PUTMultiFormat
+	public ResponseEntity<UserResponseDTO> updateUser(@Valid @RequestBody UserRequestDTO dto){
+		return ResponseEntity.ok().body(service.update(dto));
 	}
+
+    @GETMultiFormat("/user-logged")
+    public ResponseEntity<UserResponseDTO> getUserLogged() {
+        return ResponseEntity.ok().body(service.getUserLogged());
+    }
 }
