@@ -3,6 +3,10 @@ server:
   servlet:
     context-path: /api
 
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:chave-secreta}
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000
 file:

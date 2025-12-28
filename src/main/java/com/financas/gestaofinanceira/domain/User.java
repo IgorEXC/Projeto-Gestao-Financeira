@@ -45,7 +45,7 @@ public class User extends AuditingEntity implements Serializable, UserDetails {
 	@Column(name = "email", length = 50, unique = true, nullable = false)
 	private String email;
 
-	@Column(name = "password", length = 40, unique = true)
+	@Column(name = "password", unique = true)
 	private String password;
 
 	@Column(name = "birthdate", length = 10)
@@ -70,22 +70,22 @@ public class User extends AuditingEntity implements Serializable, UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return true;
     }
 }
 

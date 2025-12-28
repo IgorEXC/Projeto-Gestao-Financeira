@@ -1,6 +1,5 @@
 package com.financas.gestaofinanceira.services;
 
-import com.financas.gestaofinanceira.repositories.utils.BaseSpecs;
 import com.financas.gestaofinanceira.domain.User;
 import com.financas.gestaofinanceira.domain.User_;
 import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
@@ -10,6 +9,7 @@ import com.financas.gestaofinanceira.domain.hateoas.UserHateoasBuilder;
 import com.financas.gestaofinanceira.domain.mapper.UserMapper;
 import com.financas.gestaofinanceira.exceptions.BusinessException;
 import com.financas.gestaofinanceira.repositories.UserRepository;
+import com.financas.gestaofinanceira.repositories.utils.BaseSpecs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -56,6 +56,7 @@ public class UserService implements BaseSpecs<User> {
 				throw new BusinessException("user.exists");
 		}
 		User obj = mapper.requestToEntity(dto);
+        obj.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 		repository.save(obj);
 		UserResponseDTO dtoResponse = mapper.entityToResponse(obj);
 		hateoasBuilder.addHateoasLinksSingle(dtoResponse, dto);
@@ -79,7 +80,6 @@ public class UserService implements BaseSpecs<User> {
 	private User updateData(Long id, UserRequestDTO dto) {
 		User obj = mapper.requestToEntity(dto);
 		obj.setId(id);
-        obj.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 		return obj;
 	}
 

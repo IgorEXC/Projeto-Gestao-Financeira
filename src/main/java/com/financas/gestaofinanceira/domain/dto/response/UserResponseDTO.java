@@ -46,6 +46,11 @@ public class UserResponseDTO extends RepresentationModel<UserResponseDTO> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthdate;
+
+    public UserResponseDTO(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 }
 
 

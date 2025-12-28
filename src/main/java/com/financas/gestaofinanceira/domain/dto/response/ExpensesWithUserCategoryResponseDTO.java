@@ -1,7 +1,6 @@
 package com.financas.gestaofinanceira.domain.dto.response;
 
 import lombok.*;
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
