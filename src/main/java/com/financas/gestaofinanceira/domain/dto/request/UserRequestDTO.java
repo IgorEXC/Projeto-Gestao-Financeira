@@ -1,7 +1,10 @@
 package com.financas.gestaofinanceira.domain.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.hateoas.RepresentationModel;
@@ -20,11 +23,11 @@ public class UserRequestDTO extends RepresentationModel<UserRequestDTO> {
     private String cpf;
 
     @NotBlank
-    @Size(max = 40)
+    @Size(max = 150)
     private String name;
 
     @NotBlank
-    @Size(max = 60)
+    @Size(max = 100)
     private String username;
 
     @NotBlank
@@ -35,9 +38,8 @@ public class UserRequestDTO extends RepresentationModel<UserRequestDTO> {
     @NotNull
     private Double monthlyIncome;
 
-    @Min(8)
-    @Max(40)
-    @Size(max = 40)
+    @NotBlank
+    @Size(min = 8, max = 40)
     private String password;
 
     @JsonFormat(pattern = "dd/MM/yyyy")

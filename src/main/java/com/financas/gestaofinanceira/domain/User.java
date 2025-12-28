@@ -3,11 +3,15 @@ package com.financas.gestaofinanceira.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -18,7 +22,7 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
 @Table(name = "tb_user")
-public class User extends AuditingEntity implements Serializable {
+public class User extends AuditingEntity implements Serializable, UserDetails {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -41,7 +45,7 @@ public class User extends AuditingEntity implements Serializable {
 	@Column(name = "email", length = 50, unique = true, nullable = false)
 	private String email;
 
-	@Column(name = "password", length = 40, unique = true)
+	@Column(name = "password", unique = true)
 	private String password;
 
 	@Column(name = "birthdate", length = 10)
@@ -59,6 +63,30 @@ public class User extends AuditingEntity implements Serializable {
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private Set<UserCategory> category = new HashSet<>();
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
 
 //Criar migrations de todas as classes manualmente para treinar sql
