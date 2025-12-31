@@ -1,9 +1,7 @@
 package com.financas.gestaofinanceira.services;
 
-import com.financas.gestaofinanceira.domain.dto.response.CategoriesWithExpensesByUserResponseDTO;
-import com.financas.gestaofinanceira.domain.dto.response.CategoriesWithExpensesResponseDTO;
-import com.financas.gestaofinanceira.domain.dto.response.ExpensesWithUserCategoryResponseDTO;
-import com.financas.gestaofinanceira.domain.dto.response.UserCategoriesByUserIdResponseDTO;
+import com.financas.gestaofinanceira.configuration.security.CurrentUserLogged;
+import com.financas.gestaofinanceira.domain.dto.response.*;
 import com.financas.gestaofinanceira.exceptions.BusinessException;
 import com.financas.gestaofinanceira.repositories.UserCategoryRepository;
 import com.financas.gestaofinanceira.utils.FuncaoUtil;
@@ -11,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
@@ -24,20 +23,35 @@ import java.util.stream.Collectors;
 public class UserCategoryService implements FuncaoUtil {
 
     private final UserCategoryRepository repository;
+    private final UserService userService;
 
-    public List<UserCategoriesByUserIdResponseDTO> getUserCategoriesByUserId(Long userId) {
-        return repository.getAllUserCategoriesByUserId(userId);
+    public ExpensesByUserCategoryResponseDTO findCategoryIdByCategoryName(String categoryName){
+        Long categoryId = repository.findUserCategoryIdByCategoryName(categoryName);
+        return expensesByUserCategoryResponseDTO(categoryId);
     }
 
-    public CategoriesWithExpensesByUserResponseDTO getCategoriesWithExpenseByUserId(Long userId){
-        List<UserCategoriesByUserIdResponseDTO> queryResult = repository.getAllUserCategoriesByUserId(userId);
-        Map<String, List<UserCategoriesByUserIdResponseDTO>> response = queryResult.stream()
+    private ExpensesByUserCategoryResponseDTO expensesByUserCategoryResponseDTO(Long categoryId){
+        Long userId = CurrentUserLogged.getCurrentUserId();
+        if (!repository.existsById(categoryId) && ObjectUtils.isEmpty(userService.findById(userId))){
+            throw new BusinessException("User or Category not found!");
+        }
+        List<UserCategoriesByUserIdProjection> result = repository.getExpensesByUserCategory(userId, categoryId);
+        return result.stream().map(projection -> {
+            ExpensesByUserCategoryResponseDTO dto = new ExpensesByUserCategoryResponseDTO();
+            dto.setCategoryName(projection.getCategoryName());
+            dto.setExpenses(result.stream().map(this::buildExpense).toList());
+            return dto;
+        }).findFirst().orElseThrow(() -> new BusinessException("Category not found!"));
+    }
+
+    public CategoriesWithExpensesByUserResponseDTO getCategoriesWithExpenseByUserId(){
+        List<UserCategoriesByUserIdProjection> queryResult = repository.getAllUserCategoriesByUserId(CurrentUserLogged.getCurrentUserId());
+        Map<String, List<UserCategoriesByUserIdProjection>> response = queryResult.stream()
                 .collect(Collectors.groupingBy(
-                        UserCategoriesByUserIdResponseDTO::getUserName,
+                        UserCategoriesByUserIdProjection::getUserName,
                         LinkedHashMap::new,
                         Collectors.toList())
                 );
-
         return response
                 .entrySet()
                 .stream()
@@ -47,20 +61,20 @@ public class UserCategoryService implements FuncaoUtil {
     }
 
     private CategoriesWithExpensesByUserResponseDTO buildUser(
-            @NotNull Map.Entry<String, List<UserCategoriesByUserIdResponseDTO>> entry
+            @NotNull Map.Entry<String, List<UserCategoriesByUserIdProjection>> entry
     ){
         var firstResult = entry.getValue().getFirst();
         return CategoriesWithExpensesByUserResponseDTO.builder()
                 .name(firstResult.getUserName())
                 .cpf(firstResult.getCpf())
-                .categories(montaDadosCategory(entry.getValue()))
+                .categories(buildDataCategory(entry.getValue()))
                 .build();
     }
 
-    private List<CategoriesWithExpensesResponseDTO> montaDadosCategory(@NotNull List<UserCategoriesByUserIdResponseDTO> lista){
+    private List<CategoriesWithExpensesResponseDTO> buildDataCategory(@NotNull List<UserCategoriesByUserIdProjection> lista){
         var result = lista.stream()
                 .collect(
-                        Collectors.groupingBy(UserCategoriesByUserIdResponseDTO::getCategoryName, LinkedHashMap::new, Collectors.toList()
+                        Collectors.groupingBy(UserCategoriesByUserIdProjection::getCategoryName, LinkedHashMap::new, Collectors.toList()
                         )).entrySet().stream().map(this::buildUserCategory).toList();
         for (CategoriesWithExpensesResponseDTO dto : result) {
             var total = buildTotalExpensesByCategory(dto.getExpenses());
@@ -69,28 +83,28 @@ public class UserCategoryService implements FuncaoUtil {
         return result;
     }
 
-    private BigDecimal buildTotalExpensesByCategory(List<ExpensesWithUserCategoryResponseDTO> result){
+    private BigDecimal buildTotalExpensesByCategory(@NotNull List<ExpensesWithUserCategoryResponseDTO> result){
         return result.stream()
                 .map(ExpensesWithUserCategoryResponseDTO::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private CategoriesWithExpensesResponseDTO buildUserCategory(@NotNull Map.Entry<String, List<UserCategoriesByUserIdResponseDTO>> entry) {
+    private CategoriesWithExpensesResponseDTO buildUserCategory(@NotNull Map.Entry<String, List<UserCategoriesByUserIdProjection>> entry) {
         var firstResult = entry.getValue().getFirst();
         return CategoriesWithExpensesResponseDTO.builder()
                 .categoryName(firstResult.getCategoryName())
                 .qtdExpenses(entry.getValue().size())
-                .expenses(montaDadosExpenses(entry.getValue()))
+                .expenses(buildDataExpenses(entry.getValue()))
                 .build();
     }
 
-    private List<ExpensesWithUserCategoryResponseDTO> montaDadosExpenses(@NotNull List<UserCategoriesByUserIdResponseDTO> lista){
+    private List<ExpensesWithUserCategoryResponseDTO> buildDataExpenses(@NotNull List<UserCategoriesByUserIdProjection> lista){
         return lista.stream()
                 .map(this::buildExpense)
                 .toList();
     }
 
-    private ExpensesWithUserCategoryResponseDTO buildExpense(@NotNull UserCategoriesByUserIdResponseDTO dto){
+    private ExpensesWithUserCategoryResponseDTO buildExpense(@NotNull UserCategoriesByUserIdProjection dto){
         return ExpensesWithUserCategoryResponseDTO.builder()
                 .name(dto.getExpense())
                 .description(
@@ -101,5 +115,4 @@ public class UserCategoryService implements FuncaoUtil {
                 .necessaryExpense(dto.getNecessaryExpense())
                 .build();
     }
-
 }
