@@ -4,7 +4,6 @@ import com.financas.gestaofinanceira.configuration.security.CurrentUserLogged;
 import com.financas.gestaofinanceira.domain.User;
 import com.financas.gestaofinanceira.domain.User_;
 import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
-import com.financas.gestaofinanceira.domain.dto.response.CategoriesWithExpensesByUserResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.UserResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.UserMapper;
 import com.financas.gestaofinanceira.exceptions.BusinessException;
@@ -41,10 +40,9 @@ public class UserService implements BaseSpecs<User> {
 	}
 
     //todo: regra para somente perfil de adm
-	public UserResponseDTO findById(Long id) {
-		User obj = repository.findById(id)
+	public User findById(Long id) {
+		return repository.findById(id)
                 .orElseThrow(() -> new BusinessException("user not found"));
-		return mapper.entityToResponse(obj);
 	}
 
     public UserResponseDTO getUserLogged() {
@@ -67,7 +65,7 @@ public class UserService implements BaseSpecs<User> {
 	@Transactional
 	public UserResponseDTO update(UserRequestDTO dto) {
         Long userId = CurrentUserLogged.getCurrentUserId();
-		User obj = mapper.responseToEntity(findById(userId));
+		User obj = findById(userId);
 		if(repository.exists(existsUserInDataBase(dto.getName(), dto.getCpf(), dto.getEmail())
 				.and(byNotEquals(User_.id, userId)))) {
 			throw new BusinessException("user.exists");
@@ -92,11 +90,11 @@ public class UserService implements BaseSpecs<User> {
 
     //retornar user com despesas por id do user
     //passar para ExpenseService
-    public CategoriesWithExpensesByUserResponseDTO getExpensesByUserId(Long userId){
-        UserResponseDTO user = this.findById(userId);
-        var dto = new CategoriesWithExpensesByUserResponseDTO();
-
-        return null;
-    }
+//    public CategoriesWithExpensesByUserResponseDTO getExpensesByUserId(Long userId){
+//        UserResponseDTO user = this.findById(userId);
+//        var dto = new CategoriesWithExpensesByUserResponseDTO();
+//
+//        return null;
+//    }
 
 }

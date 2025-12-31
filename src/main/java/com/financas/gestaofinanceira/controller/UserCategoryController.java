@@ -1,14 +1,16 @@
 package com.financas.gestaofinanceira.controller;
 
 import com.financas.gestaofinanceira.annotations.GETMultiFormat;
+import com.financas.gestaofinanceira.domain.dto.request.CreateCategoryRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.response.CategoriesWithExpensesByUserResponseDTO;
+import com.financas.gestaofinanceira.domain.dto.response.CreateCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpensesByUserCategoryResponseDTO;
 import com.financas.gestaofinanceira.services.UserCategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,5 +30,11 @@ public class UserCategoryController {
         return ResponseEntity.ok().body(userCategoryService.findCategoryIdByCategoryName(categoryName));
     }
 
-    //criar endpoint para criar categorias unicas
+    @PostMapping
+    public ResponseEntity<CreateCategoryResponseDTO> expensesByUserCategory(
+            @Valid @RequestBody CreateCategoryRequestDTO request){
+        var userCategory = userCategoryService.createUserCategory(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                new CreateCategoryResponseDTO(userCategory.getId(), userCategory.getName()));
+    }
 }

@@ -3,12 +3,13 @@ package com.financas.gestaofinanceira.repositories;
 import com.financas.gestaofinanceira.domain.UserCategory;
 import com.financas.gestaofinanceira.domain.dto.response.UserCategoriesByUserIdProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface UserCategoryRepository extends JpaRepository<UserCategory, Long> {
+public interface UserCategoryRepository extends JpaRepository<UserCategory, Long>, JpaSpecificationExecutor<UserCategory> {
 
     @Query("""
         SELECT cat.id
@@ -33,7 +34,6 @@ public interface UserCategoryRepository extends JpaRepository<UserCategory, Long
     """)
     List<UserCategoriesByUserIdProjection> getExpensesByUserCategory(
             @Param("userId") Long userId, @Param("categoryId") Long categoryId);
-    //essa consulta tambem esta errada
 
     @Query(value = """
         SELECT
