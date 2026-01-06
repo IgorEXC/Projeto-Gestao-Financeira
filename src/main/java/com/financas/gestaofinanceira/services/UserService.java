@@ -6,6 +6,7 @@ import com.financas.gestaofinanceira.domain.User_;
 import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.response.UserResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.UserMapper;
+import com.financas.gestaofinanceira.domain.utils.Birthdate;
 import com.financas.gestaofinanceira.exceptions.BusinessException;
 import com.financas.gestaofinanceira.repositories.UserRepository;
 import com.financas.gestaofinanceira.repositories.utils.BaseSpecs;
@@ -57,6 +58,8 @@ public class UserService implements BaseSpecs<User> {
 				throw new BusinessException("user.exists");
 		}
 		User obj = mapper.requestToEntity(dto);
+        Birthdate birthdate = new Birthdate(dto.getBirthdate());
+        obj.setBirthdate(birthdate.getBirthdate());
         obj.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 		repository.save(obj);
         return mapper.entityToResponse(obj);
@@ -78,6 +81,8 @@ public class UserService implements BaseSpecs<User> {
 	private User updateData(Long id, UserRequestDTO dto) {
 		User obj = mapper.requestToEntity(dto);
 		obj.setId(id);
+        Birthdate birthdate = new Birthdate(dto.getBirthdate());
+        obj.setBirthdate(birthdate.getBirthdate());
         obj.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 		return obj;
 	}
