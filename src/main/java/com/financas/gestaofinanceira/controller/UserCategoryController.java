@@ -31,7 +31,7 @@ public class UserCategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateCategoryResponseDTO> expensesByUserCategory(
+    public ResponseEntity<CreateCategoryResponseDTO> createUserCategory(
             @Valid @RequestBody CreateCategoryRequestDTO request){
         var userCategory = userCategoryService.createUserCategory(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(

@@ -81,8 +81,7 @@ public class UserService implements BaseSpecs<User> {
 	private User updateData(Long id, UserRequestDTO dto) {
 		User obj = mapper.requestToEntity(dto);
 		obj.setId(id);
-        Birthdate birthdate = new Birthdate(dto.getBirthdate());
-        obj.setBirthdate(birthdate.getBirthdate());
+        obj.setBirthdate(new Birthdate(dto.getBirthdate()).getBirthdate());
         obj.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 		return obj;
 	}
@@ -92,14 +91,5 @@ public class UserService implements BaseSpecs<User> {
 				.or(byEquals(User_.cpf, cpf))
 				.or(byEquals(User_.email, email));
 	}
-
-    //retornar user com despesas por id do user
-    //passar para ExpenseService
-//    public CategoriesWithExpensesByUserResponseDTO getExpensesByUserId(Long userId){
-//        UserResponseDTO user = this.findById(userId);
-//        var dto = new CategoriesWithExpensesByUserResponseDTO();
-//
-//        return null;
-//    }
 
 }

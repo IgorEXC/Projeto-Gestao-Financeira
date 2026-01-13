@@ -1,17 +1,23 @@
 package com.financas.gestaofinanceira.services;
 
+import com.financas.gestaofinanceira.configuration.security.CurrentUserLogged;
 import com.financas.gestaofinanceira.domain.Expense;
+import com.financas.gestaofinanceira.domain.User_;
 import com.financas.gestaofinanceira.domain.dto.projections.ExpenseCategoryProjection;
 import com.financas.gestaofinanceira.domain.dto.request.ExpenseRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.request.RangeDateRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpenseResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpenseWithCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
 import com.financas.gestaofinanceira.repositories.ExpenseRepository;
+import com.financas.gestaofinanceira.repositories.impl.ExpenseDynamicQueryRepositoryImpl;
+import com.financas.gestaofinanceira.repositories.utils.BaseSpecs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,30 +27,39 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class ExpenseService {
+public class ExpenseService implements BaseSpecs<Expense> {
 
 	private final ExpenseRepository repository;
 	private final ExpenseMapper mapper;
 	private final ProductCategoryService productCategoryService;
+    private final ExpenseDynamicQueryRepositoryImpl dynamicQueryRepository;
 
 	public Page<ExpenseResponseDTO> findAll(int page, int size) {
 		List<ExpenseResponseDTO> pageResult = repository
                 .findAll(PageRequest.of(page, size))
                 .stream()
+                .filter(expense -> expense.getUser().getId().equals(CurrentUserLogged.getCurrentUserId()))
                 .map(mapper::entityToResponse)
                 .toList();
         return new PageImpl<>(pageResult, PageRequest.of(page, size), pageResult.size());
 	}
 
-    @Description("Usado para retornar os dados para o Refine UI")
+    @Description("Usado para retornar os dados para o Refine UI - paliativo até concertar o método Provider")
     public List<ExpenseResponseDTO> findAll() {
 		return repository
                 .findAll()
                 .stream()
+                .filter(expense -> expense.getUser().getId().equals(CurrentUserLogged.getCurrentUserId()))
                 .map(mapper::entityToResponse)
-                .sorted(Comparator.comparing(ExpenseResponseDTO::getId))
+                .sorted(Comparator.comparing(ExpenseResponseDTO::getDateOfPurchase).reversed())
                 .toList();
 	}
+
+    //Montar consulta dinamica por intervalo de data no filtro where
+    public Specification<Expense> findAllByPurchaseDate(RangeDateRequestDTO dto) {
+        Long userId = CurrentUserLogged.getCurrentUserId();
+        return dynamicQueryRepository.findExpensesByRangeDate(dto.startDate(), dto.endDate());
+    }
 
 	public ExpenseResponseDTO findById(Long id) {
 		Expense result = repository.findById(id).orElseThrow();
@@ -54,6 +69,9 @@ public class ExpenseService {
 	@Transactional
 	public Expense insert(ExpenseRequestDTO dto) {
 		Expense expense = mapper.requestToEntity(dto);
+        //provavelmente para salvar um expense você tera que definir sua categoria e a
+        //categoria de usuario (opcional). Categoria de usuario pode ser adicionada depois com
+        //uma busca por nome da categoria de usuario.
 		//expense.setProductCategory(categoryService.findById(dto.getCategoryId()));
 		return repository.save(expense);
 	}

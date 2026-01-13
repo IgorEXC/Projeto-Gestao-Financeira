@@ -2,13 +2,17 @@ package com.financas.gestaofinanceira.controller;
 
 import com.financas.gestaofinanceira.annotations.GETMultiFormat;
 import com.financas.gestaofinanceira.annotations.POSTMultiFormat;
+import com.financas.gestaofinanceira.domain.Expense;
 import com.financas.gestaofinanceira.domain.dto.request.ExpenseRequestDTO;
+import com.financas.gestaofinanceira.domain.dto.request.RangeDateRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpenseResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpenseWithCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
 import com.financas.gestaofinanceira.services.ExpenseService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +54,11 @@ public class ExpenseController {
     @GETMultiFormat(value = "/category-by-expense/{id}")
     public ResponseEntity<ExpenseWithCategoryResponseDTO> findCategoryByExpense(@PathVariable Long id) {
         return ResponseEntity.ok().body(service.findCategoryByExpense(id));
+    }
+
+    @POSTMultiFormat(value = "/range-date")
+    public ResponseEntity<Specification<Expense>> findExpensesByRangeDate(@Valid @RequestBody RangeDateRequestDTO dto){
+        return ResponseEntity.ok().body(service.findAllByPurchaseDate(dto));
     }
 
 }

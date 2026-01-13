@@ -44,4 +44,8 @@ public class Expense extends AuditingEntity implements Serializable {
 
 	@ManyToMany(mappedBy = "expenses")
 	private Set<ProductCategory> productCategory = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }
