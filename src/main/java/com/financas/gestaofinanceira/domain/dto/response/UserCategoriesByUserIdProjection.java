@@ -5,7 +5,7 @@ import jakarta.annotation.Nullable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public interface UserCategoriesByUserIdResponseDTO{
+public interface UserCategoriesByUserIdProjection {
         String getUserName();
         String getCpf();
         String getCategoryName();

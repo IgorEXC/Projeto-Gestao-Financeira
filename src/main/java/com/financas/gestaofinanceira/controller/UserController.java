@@ -5,6 +5,7 @@ import com.financas.gestaofinanceira.annotations.POSTMultiFormat;
 import com.financas.gestaofinanceira.annotations.PUTMultiFormat;
 import com.financas.gestaofinanceira.domain.dto.request.UserRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.response.UserResponseDTO;
+import com.financas.gestaofinanceira.domain.mapper.UserMapper;
 import com.financas.gestaofinanceira.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.net.URI;
 public class UserController {
 
 	private final UserService service;
+    private final UserMapper mapper;
 
 	@GETMultiFormat
 	public ResponseEntity<CollectionModel<UserResponseDTO>> findAllPerPage(@RequestParam int page, @RequestParam int itensPerPage){
@@ -29,7 +31,7 @@ public class UserController {
 
 	@GETMultiFormat(value = "/{id}")
 	public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id){
-		UserResponseDTO dto = service.findById(id);
+		UserResponseDTO dto = mapper.entityToResponse(service.findById(id));
 		return ResponseEntity.ok().body(dto);
 	}
 

@@ -15,10 +15,4 @@ public class CategoriesWithExpensesResponseDTO {
     Integer qtdExpenses;
     BigDecimal totalPrice;
     List<ExpensesWithUserCategoryResponseDTO> expenses;
-
-//    public void getTotalPrice() {
-//        for (ExpensesWithUserCategoryResponseDTO dto : expenses) {
-//            totalPrice = totalPrice.add(dto.getPrice());
-//        }
-//    }
 }

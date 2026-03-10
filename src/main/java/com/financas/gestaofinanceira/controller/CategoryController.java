@@ -5,13 +5,15 @@ import com.financas.gestaofinanceira.annotations.POSTMultiFormat;
 import com.financas.gestaofinanceira.domain.ProductCategory;
 import com.financas.gestaofinanceira.domain.dto.request.CategoryRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.response.CategoryResponseDTO;
-import com.financas.gestaofinanceira.domain.dto.response.ExpensesByUserCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.CategoryMapper;
 import com.financas.gestaofinanceira.services.ProductCategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -44,10 +46,4 @@ public class CategoryController {
 		return ResponseEntity.created(uri).body(productCategory);
 	}
 
-    @GETMultiFormat(value = "/expenses-by-user-category")
-    public ResponseEntity<List<ExpensesByUserCategoryResponseDTO>> expensesByUserCategory(
-            @RequestParam(name = "user_id") Long userId,
-            @RequestParam(name = "category_id") Long categoryId){
-        return ResponseEntity.ok().body(service.expensesByUserCategoryResponseDTO(userId, categoryId));
-    }
 }

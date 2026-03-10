@@ -2,6 +2,8 @@ package com.financas.gestaofinanceira.domain.dto.response;
 
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @Getter
 @Setter
@@ -9,6 +11,5 @@ import lombok.*;
 @NoArgsConstructor
 public class ExpensesByUserCategoryResponseDTO {
     private String categoryName;
-    private String userName;
-    private String expense;
+    private List<ExpensesWithUserCategoryResponseDTO> expenses;
 }

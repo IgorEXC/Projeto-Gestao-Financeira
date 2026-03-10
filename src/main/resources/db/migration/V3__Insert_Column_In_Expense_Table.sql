@@ -1,0 +1,2 @@
+ALTER TABLE tb_expense
+ADD COLUMN user_id BIGINT;
