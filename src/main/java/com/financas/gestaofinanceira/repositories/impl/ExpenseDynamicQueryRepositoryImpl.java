@@ -17,6 +17,7 @@ public class ExpenseDynamicQueryRepositoryImpl implements ExpenseDynamicQueryRep
     @Override
     public Specification<Expense> findExpensesByRangeDate(String startDate, String endDate) {
         return ((root, criteriaQuery, cb) -> {
+            System.out.println("Entrou na Spec");
             if (Objects.nonNull(startDate) && Objects.nonNull(endDate)) {
                 return cb.between(root.get(Expense_.DATE_OF_PURCHASE).as(String.class), startDate, endDate);
             }
@@ -25,7 +26,7 @@ public class ExpenseDynamicQueryRepositoryImpl implements ExpenseDynamicQueryRep
                 predicates.add(cb.greaterThanOrEqualTo(root.get(Expense_.DATE_OF_PURCHASE), startDate));
             }
             if(Objects.nonNull(endDate)){
-                predicates.add(cb.greaterThanOrEqualTo(root.get(Expense_.DATE_OF_PURCHASE), endDate));
+                predicates.add(cb.lessThanOrEqualTo(root.get(Expense_.DATE_OF_PURCHASE), endDate));
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         });

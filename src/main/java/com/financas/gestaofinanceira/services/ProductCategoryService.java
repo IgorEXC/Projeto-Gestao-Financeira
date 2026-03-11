@@ -20,7 +20,6 @@ public class ProductCategoryService {
 
 	private final ProductCategoryRepository repository;
 	private final CategoryMapper mapper;
-    private final ExpenseService expenseService;
 
 	public List<CategoryResponseDTO> findAll(){
         Long userId = CurrentUserLogged.getCurrentUserId();
@@ -32,9 +31,9 @@ public class ProductCategoryService {
 		return repository.findById(id).orElseThrow(() -> new BusinessException("Category not found!"));
 	}
 
-    public ProductCategory findProductCategoryByName(String name){
-        expenseService.findAll().stream().map(exp -> ex)
-    }
+//    public ProductCategory findProductCategoryByName(String name){
+//        expenseService.findAll().stream().map(exp -> ex)
+//    }
 
 	@Transactional
 	public ProductCategory insert(CategoryRequestDTO category){

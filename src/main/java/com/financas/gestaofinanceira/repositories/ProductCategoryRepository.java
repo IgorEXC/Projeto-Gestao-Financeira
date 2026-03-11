@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Long>{
 
-    ProductCategory findProductCategory
+    //ProductCategory findProductCategory
 
     @Query("""
     SELECT cat

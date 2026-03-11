@@ -7,30 +7,42 @@ app:
   security:
     jwt:
       secret: ${JWT_SECRET:chave-secreta}
+
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000
+
 file:
-  upload-dir: /home/igor/Área de trabalho/Projetos Spring
+  # Corrigido para caminho relativo para evitar o erro AccessDeniedException
+  upload-dir: ./uploads
+
 spring:
+  application:
+    name: gestao
+  profiles:
+    active: ${APP_PROFILE:dev}
   security:
     user:
       name: postgres
       password: 1234
-  jpa:
-    open-in-view: 'false'
-  application:
-    name: gestao
   servlet:
     multipart:
       enabled: true
       file-size-threshold: 2KB
       max-file-size: 200MB
       max-request-size: 215MB
-  profiles:
-    active: ${APP_PROFILE:dev}
+  jpa:
+    open-in-view: false
+    # Mantemos false aqui pois o controle será feito pelo Logger abaixo
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
 
 logging:
   level:
     root: INFO
-
-
+    # Mostra o SQL via Logger (nível DEBUG)
+    org.hibernate.SQL: DEBUG
+    # Mostra os valores reais dos parâmetros substitutos (?) (nível TRACE)
+    org.hibernate.orm.jdbc.bind: TRACE

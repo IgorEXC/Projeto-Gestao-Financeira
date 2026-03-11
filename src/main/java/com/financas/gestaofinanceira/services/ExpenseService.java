@@ -2,7 +2,6 @@ package com.financas.gestaofinanceira.services;
 
 import com.financas.gestaofinanceira.configuration.security.CurrentUserLogged;
 import com.financas.gestaofinanceira.domain.Expense;
-import com.financas.gestaofinanceira.domain.User_;
 import com.financas.gestaofinanceira.domain.dto.projections.ExpenseCategoryProjection;
 import com.financas.gestaofinanceira.domain.dto.request.ExpenseRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.request.RangeDateRequestDTO;
@@ -10,7 +9,7 @@ import com.financas.gestaofinanceira.domain.dto.response.ExpenseResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpenseWithCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
 import com.financas.gestaofinanceira.repositories.ExpenseRepository;
-import com.financas.gestaofinanceira.repositories.impl.ExpenseDynamicQueryRepositoryImpl;
+import com.financas.gestaofinanceira.repositories.criteria.ExpenseDynamicQueryRepository;
 import com.financas.gestaofinanceira.repositories.utils.BaseSpecs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
@@ -32,7 +31,7 @@ public class ExpenseService implements BaseSpecs<Expense> {
 	private final ExpenseRepository repository;
 	private final ExpenseMapper mapper;
 	private final ProductCategoryService productCategoryService;
-    private final ExpenseDynamicQueryRepositoryImpl dynamicQueryRepository;
+    private final ExpenseDynamicQueryRepository dynamicQueryRepository;
 
 	public Page<ExpenseResponseDTO> findAll(int page, int size) {
 		List<ExpenseResponseDTO> pageResult = repository
