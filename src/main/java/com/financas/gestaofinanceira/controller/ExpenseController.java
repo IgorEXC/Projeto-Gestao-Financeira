@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/v1/expenses")
@@ -57,8 +56,7 @@ public class ExpenseController {
     }
 
     @POSTMultiFormat(value = "/range-date")
-    public ResponseEntity<Specification<Expense>> findExpensesByRangeDate(@Valid @RequestBody RangeDateRequestDTO dto){
+    public ResponseEntity<List<ExpenseResponseDTO>> findExpensesByRangeDate(@Valid @RequestBody RangeDateRequestDTO dto){
         return ResponseEntity.ok().body(service.findAllByPurchaseDate(dto));
     }
-
 }
