@@ -2,6 +2,7 @@ package com.financas.gestaofinanceira.services;
 
 import com.financas.gestaofinanceira.configuration.security.CurrentUserLogged;
 import com.financas.gestaofinanceira.domain.Expense;
+import com.financas.gestaofinanceira.domain.User;
 import com.financas.gestaofinanceira.domain.dto.projections.ExpenseCategoryProjection;
 import com.financas.gestaofinanceira.domain.dto.request.ExpenseRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.request.RangeDateRequestDTO;
@@ -9,14 +10,13 @@ import com.financas.gestaofinanceira.domain.dto.response.ExpenseResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpenseWithCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
 import com.financas.gestaofinanceira.repositories.ExpenseRepository;
-import com.financas.gestaofinanceira.repositories.criteria.ExpenseDynamicQueryRepository;
+import com.financas.gestaofinanceira.repositories.impl.ExpenseDynamicQueryRepository;
 import com.financas.gestaofinanceira.repositories.utils.BaseSpecs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +30,7 @@ public class ExpenseService implements BaseSpecs<Expense> {
 
 	private final ExpenseRepository repository;
 	private final ExpenseMapper mapper;
-	private final ProductCategoryService productCategoryService;
+    private final UserService userService;
     private final ExpenseDynamicQueryRepository dynamicQueryRepository;
 
 	public Page<ExpenseResponseDTO> findAll(int page, int size) {
@@ -54,10 +54,13 @@ public class ExpenseService implements BaseSpecs<Expense> {
                 .toList();
 	}
 
-    //Montar consulta dinamica por intervalo de data no filtro where
-    public Specification<Expense> findAllByPurchaseDate(RangeDateRequestDTO dto) {
-        Long userId = CurrentUserLogged.getCurrentUserId();
-        return dynamicQueryRepository.findExpensesByRangeDate(dto.startDate(), dto.endDate());
+    //Intervalo de datas inicial e final não estão filtrando corretamente
+    public List<ExpenseResponseDTO> findAllByPurchaseDate(RangeDateRequestDTO dto) {
+        return repository.findAll(dynamicQueryRepository
+                .findExpensesByRangeDate(dto.startDate(), dto.endDate(), getUserLogged()))
+                .stream()
+                .map(mapper::entityToResponse)
+                .toList();
     }
 
 	public ExpenseResponseDTO findById(Long id) {
@@ -86,4 +89,7 @@ public class ExpenseService implements BaseSpecs<Expense> {
         throw new RuntimeException("Category not found!");
     }
 
+    private User getUserLogged(){
+        return userService.findById(CurrentUserLogged.getCurrentUserId());
+    }
 }

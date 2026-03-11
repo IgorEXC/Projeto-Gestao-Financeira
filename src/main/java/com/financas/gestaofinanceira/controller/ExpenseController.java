@@ -56,8 +56,7 @@ public class ExpenseController {
     }
 
     @POSTMultiFormat(value = "/range-date")
-    public ResponseEntity<Specification<Expense>> findExpensesByRangeDate(@Valid @RequestBody RangeDateRequestDTO dto){
+    public ResponseEntity<List<ExpenseResponseDTO>> findExpensesByRangeDate(@Valid @RequestBody RangeDateRequestDTO dto){
         return ResponseEntity.ok().body(service.findAllByPurchaseDate(dto));
     }
-
 }
