@@ -4,6 +4,7 @@ import com.financas.gestaofinanceira.domain.Expense;
 import com.financas.gestaofinanceira.domain.Expense_;
 import com.financas.gestaofinanceira.domain.User;
 import jakarta.persistence.criteria.Predicate;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
@@ -19,17 +20,17 @@ public class ExpenseDynamicQueryRepository {
         return ((root, criteriaQuery, cb) -> {
             LocalDate startDateToLocalDate;
             LocalDate endDateToLocalDate;
+            List<Predicate> predicates = new ArrayList<>();
             if (Objects.nonNull(startDate) && Objects.nonNull(endDate)) {
                 startDateToLocalDate = LocalDate.parse(startDate);
                 endDateToLocalDate = LocalDate.parse(endDate);
-                return cb.between(root.get(Expense_.DATE_OF_PURCHASE), startDateToLocalDate, endDateToLocalDate);
+                predicates.add(cb.between(root.get(Expense_.DATE_OF_PURCHASE), startDateToLocalDate, endDateToLocalDate));
             }
-            List<Predicate> predicates = new ArrayList<>();
-            if(Objects.nonNull(startDate)){
+            if(Objects.nonNull(startDate) && Objects.isNull(endDate)){
                 startDateToLocalDate = LocalDate.parse(startDate);
                 predicates.add(cb.greaterThanOrEqualTo(root.get(Expense_.DATE_OF_PURCHASE), startDateToLocalDate));
             }
-            if(Objects.nonNull(endDate)){
+            if(Objects.nonNull(endDate) && Objects.isNull(startDate)){
                 endDateToLocalDate = LocalDate.parse(endDate);
                 predicates.add(cb.lessThanOrEqualTo(root.get(Expense_.DATE_OF_PURCHASE), endDateToLocalDate));
             }

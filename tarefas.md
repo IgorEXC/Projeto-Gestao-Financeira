@@ -3,14 +3,6 @@
 
 - [x] Fazer as migrações corretas do banco, ou seja, os campos que foram adicionados ou removidos precisam estar nas migrations.
 - [x] Para dropar a tabela de Category, é necessário excluir a chaves estrangeiras que ela possui em outras tabelas
- ----
-### Remodelar
-- [x] Relação entre Usuário e Categoria do Usuário é 1:N
-- [x] Relação entre Categoria do Usuário para Despesa também é 1:N (Dentro da Categoria de Usuário terá uma lista que guardará as despesas, se por acaso a categoria não tiver nome, a despesa será adicionada numa categoria padrão)
-- [x] Relação de Despesa para Categoria do Produto é de N:N sem dado extra da relação
-- [x] Refazer o banco com a modelagem correta e refazer também as migrations.
-- [x] A seed está dando errado, corrigir.
- -----
 - [ ] Aplicar autenticação no front-end e fazer tela de login.
 - [x] Fazer com que somente seja mostrado dados daquele usuário logado.
 - [ ] Aplicar mudanças de usuário logado para os outros services.
@@ -25,7 +17,14 @@
 - [ ] Retirar rotas redundantes, ex: POST(/create)
 - [ ] Calcular porcentagem com base no total das categorias.
 - [ ] Criar regra de perfil de adm para determinados endpoints - Com base na role e no usuário logado, o usuário poderá ou não acessar aquele endpoint.
-
+- [ ] Ache um endpoint que você possa usar Request Param nele.
+ ----
+### Remodelar
+- [x] Relação entre Usuário e Categoria do Usuário é 1:N
+- [x] Relação entre Categoria do Usuário para Despesa também é 1:N (Dentro da Categoria de Usuário terá uma lista que guardará as despesas, se por acaso a categoria não tiver nome, a despesa será adicionada numa categoria padrão)
+- [x] Relação de Despesa para Categoria do Produto é de N:N sem dado extra da relação
+- [x] Refazer o banco com a modelagem correta e refazer também as migrations.
+- [x] A seed está dando errado, corrigir.
 
 -------------------
 ## - Observações:
