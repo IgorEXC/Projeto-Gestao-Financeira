@@ -59,7 +59,7 @@ public class UserService implements BaseSpecs<User> {
 		}
 		User obj = mapper.requestToEntity(dto);
         Birthdate birthdate = new Birthdate(dto.getBirthdate());
-        obj.setBirthdate(birthdate.getBirthdate());
+        obj.setBirthdate(birthdate.birthdate());
         obj.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 		repository.save(obj);
         return mapper.entityToResponse(obj);
@@ -81,7 +81,7 @@ public class UserService implements BaseSpecs<User> {
 	private User updateData(Long id, UserRequestDTO dto) {
 		User obj = mapper.requestToEntity(dto);
 		obj.setId(id);
-        obj.setBirthdate(new Birthdate(dto.getBirthdate()).getBirthdate());
+        obj.setBirthdate(new Birthdate(dto.getBirthdate()).birthdate());
         obj.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 		return obj;
 	}

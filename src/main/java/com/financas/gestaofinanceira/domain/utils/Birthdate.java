@@ -1,20 +1,14 @@
 package com.financas.gestaofinanceira.domain.utils;
 
-import lombok.Getter;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Getter
-public class Birthdate {
+public record Birthdate(LocalDate birthdate) {
 
-    private final LocalDate birthdate;
-
-    public Birthdate (LocalDate birthdate) {
+    public Birthdate {
         if (!validateBirthdate(birthdate)) {
             throw new IllegalArgumentException("Birthdate is invalid!");
         }
-        this.birthdate = birthdate;
     }
 
     private boolean validateBirthdate(LocalDate birthdate) {

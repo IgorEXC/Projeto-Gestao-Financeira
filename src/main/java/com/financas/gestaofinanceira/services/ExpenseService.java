@@ -9,10 +9,12 @@ import com.financas.gestaofinanceira.domain.dto.request.RangeDateRequestDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpenseResponseDTO;
 import com.financas.gestaofinanceira.domain.dto.response.ExpenseWithCategoryResponseDTO;
 import com.financas.gestaofinanceira.domain.mapper.ExpenseMapper;
+import com.financas.gestaofinanceira.exceptions.BusinessException;
 import com.financas.gestaofinanceira.repositories.ExpenseRepository;
 import com.financas.gestaofinanceira.repositories.impl.ExpenseDynamicQueryRepository;
 import com.financas.gestaofinanceira.repositories.utils.BaseSpecs;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.context.annotation.Description;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -56,8 +58,13 @@ public class ExpenseService implements BaseSpecs<Expense> {
 
     //Intervalo de datas inicial e final não estão filtrando corretamente
     public List<ExpenseResponseDTO> findAllByPurchaseDate(RangeDateRequestDTO dto) {
+        String startDate = dto.startDate();
+        String endDate = dto.endDate();
+        if(ObjectUtils.allNull(startDate, endDate)){
+            throw new BusinessException("Preencha pelo menos uma data!");
+        }
         return repository.findAll(dynamicQueryRepository
-                .findExpensesByRangeDate(dto.startDate(), dto.endDate(), getUserLogged()))
+                .findExpensesByRangeDate(startDate, endDate, getUserLogged()))
                 .stream()
                 .map(mapper::entityToResponse)
                 .toList();

@@ -46,5 +46,3 @@ logging:
     org.hibernate.SQL: DEBUG
     # Mostra os valores reais dos parâmetros substitutos (?) (nível TRACE)
     org.hibernate.orm.jdbc.bind: TRACE
-    # Adicione esta linha para ver os erros de conversão de JSON e requisições HTTP
-    org.springframework.web: DEBUG
